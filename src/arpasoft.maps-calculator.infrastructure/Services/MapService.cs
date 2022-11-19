@@ -17,7 +17,7 @@ namespace arpasoft.maps_calculator.infrastructure.Services
             };
         }
 
-        public void AddConnection(int id1, int id2)
+        public void AddEdge(int id1, int id2)
         {
         }
 
@@ -29,17 +29,17 @@ namespace arpasoft.maps_calculator.infrastructure.Services
             _map!.Nodes!.Add(node);
         }
 
-        public bool ConnectionExists(int id1, int id2)
+        public bool EdgeExists(int id1, int id2)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T>? GetContacts(int id)
+        public IEnumerable<T>? GetAdjacentNodesByID(int id)
         {
             throw new NotImplementedException();
         }
 
-        public IEnumerable<T>? GetNodes()
+        public IEnumerable<T>? GetAllNodes()
         {
             return _map?.Nodes;
         }
@@ -49,9 +49,12 @@ namespace arpasoft.maps_calculator.infrastructure.Services
             throw new NotImplementedException();
         }
 
-        public int NodesCount()
+        public int GetNodesCount()
         {
-            throw new NotImplementedException();
+            if (!IsValidMap())
+                return 0;
+
+            return _map!.Nodes!.Count;
         }
 
         #region Utils

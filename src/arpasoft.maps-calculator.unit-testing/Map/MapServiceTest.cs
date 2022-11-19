@@ -26,7 +26,7 @@ namespace arpasoft.maps_calculator.unit_testing.Map
             _mapService.AddNode(new NodeTest(6) { Name = "Charizard" });
 
             /// Act
-            var countNodes = _mapService.GetNodes()?.ToList().Count;
+            var countNodes = _mapService.GetNodesCount();
             
             /// Assert
             Assert.Equal(6, countNodes);

@@ -14,7 +14,7 @@ namespace arpasoft.maps_calculator.core.Services.Map
         /// </summary>
         /// <param name="id">ID del Nodo a analizar</param>
         /// <returns>Lista de Contactos</returns>
-        IEnumerable<T>? GetContacts(int id);
+        IEnumerable<T>? GetAdjacentNodesByID(int id);
 
         /// <summary>
         /// Devuelve true si existe la conexión
@@ -22,13 +22,13 @@ namespace arpasoft.maps_calculator.core.Services.Map
         /// <param name="id1">ID del Nodo 1</param>
         /// <param name="id2">ID del Nodo 2</param>
         /// <returns></returns>
-        bool ConnectionExists(int id1, int id2);
+        bool EdgeExists(int id1, int id2);
 
         /// <summary>
         /// Agrega una nueva conexión si es que no ésta no existe
         /// </summary>
         /// <param name="node1">ID del Nodo 1</param>
         /// <param name="node2">ID del Nodo 2</param>
-        void AddConnection(int id1, int id2);
+        void AddEdge(int id1, int id2);
     }
 }
