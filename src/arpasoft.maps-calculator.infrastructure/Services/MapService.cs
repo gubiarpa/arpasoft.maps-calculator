@@ -6,14 +6,27 @@ namespace arpasoft.maps_calculator.infrastructure.Services
 {
     public class MapService<T> : IMapService<T> where T : IEntityWithID
     {
+        private readonly Map<T> _map;
+
+        public MapService()
+        {
+            _map = new Map<T>()
+            {
+                Nodes = new List<T>(),
+                Edges = new List<Edge<T>>()
+            };
+        }
+
         public void AddConnection(int id1, int id2)
         {
-            throw new NotImplementedException();
         }
 
         public void AddNode(T node)
         {
-            throw new NotImplementedException();
+            if (!IsValidMap())
+                return;
+
+            _map!.Nodes!.Add(node);
         }
 
         public bool ConnectionExists(int id1, int id2)
@@ -40,5 +53,21 @@ namespace arpasoft.maps_calculator.infrastructure.Services
         {
             throw new NotImplementedException();
         }
+
+        #region Utils
+        private bool IsValidMap()
+        {
+            if (_map == null)
+                return false;
+
+            if (_map.Nodes == null)
+                return false;
+
+            if (_map.Edges == null)
+                return false;
+
+            return true;
+        }
+        #endregion
     }
 }
