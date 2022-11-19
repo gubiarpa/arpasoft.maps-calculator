@@ -7,9 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencie
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{9A6F0388-DFE5-4082-83EF-BE7255210B9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "arpasoft.maps-calculator.core", "arpasoft.maps-calculator.core\arpasoft.maps-calculator.core.csproj", "{2E646A66-4B39-42F6-93EA-12DEB7450E90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "arpasoft.maps-calculator.core", "arpasoft.maps-calculator.core\arpasoft.maps-calculator.core.csproj", "{2E646A66-4B39-42F6-93EA-12DEB7450E90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "arpasoft.maps-calculator.infrastructure", "arpasoft.maps-calculator.infrastructure\arpasoft.maps-calculator.infrastructure.csproj", "{E1DC7986-A1BA-43C1-A6DA-C65B79EF3329}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "arpasoft.maps-calculator.infrastructure", "arpasoft.maps-calculator.infrastructure\arpasoft.maps-calculator.infrastructure.csproj", "{E1DC7986-A1BA-43C1-A6DA-C65B79EF3329}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2FE91693-C6A0-46C7-B21B-C762970D0FE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "arpasoft.maps-calculator.unit-testing", "arpasoft.maps-calculator.unit-testing\arpasoft.maps-calculator.unit-testing.csproj", "{270810B7-701E-4FFF-87C0-317134D3DC51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +29,10 @@ Global
 		{E1DC7986-A1BA-43C1-A6DA-C65B79EF3329}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1DC7986-A1BA-43C1-A6DA-C65B79EF3329}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1DC7986-A1BA-43C1-A6DA-C65B79EF3329}.Release|Any CPU.Build.0 = Release|Any CPU
+		{270810B7-701E-4FFF-87C0-317134D3DC51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{270810B7-701E-4FFF-87C0-317134D3DC51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{270810B7-701E-4FFF-87C0-317134D3DC51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{270810B7-701E-4FFF-87C0-317134D3DC51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -32,6 +40,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{2E646A66-4B39-42F6-93EA-12DEB7450E90} = {62B2D401-FAF6-4A77-8DB4-4095CB7BC788}
 		{E1DC7986-A1BA-43C1-A6DA-C65B79EF3329} = {62B2D401-FAF6-4A77-8DB4-4095CB7BC788}
+		{270810B7-701E-4FFF-87C0-317134D3DC51} = {2FE91693-C6A0-46C7-B21B-C762970D0FE4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A2CC3633-4FAA-4D4E-A77F-0718240A15FB}

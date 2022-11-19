@@ -41,7 +41,7 @@ namespace arpasoft.maps_calculator.infrastructure.Services
 
         public IEnumerable<T>? GetNodes()
         {
-            throw new NotImplementedException();
+            return _map?.Nodes;
         }
 
         public IEnumerable<TreeNode<T>>? GetPaths(int idStart, int idEnd)
