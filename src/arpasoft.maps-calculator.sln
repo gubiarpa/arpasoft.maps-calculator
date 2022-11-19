@@ -3,9 +3,28 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dependencies", "Dependencies", "{62B2D401-FAF6-4A77-8DB4-4095CB7BC788}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{9A6F0388-DFE5-4082-83EF-BE7255210B9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "arpasoft.maps-calculator.core", "arpasoft.maps-calculator.core\arpasoft.maps-calculator.core.csproj", "{2E646A66-4B39-42F6-93EA-12DEB7450E90}"
+EndProject
 Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E646A66-4B39-42F6-93EA-12DEB7450E90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E646A66-4B39-42F6-93EA-12DEB7450E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E646A66-4B39-42F6-93EA-12DEB7450E90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E646A66-4B39-42F6-93EA-12DEB7450E90}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2E646A66-4B39-42F6-93EA-12DEB7450E90} = {62B2D401-FAF6-4A77-8DB4-4095CB7BC788}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A2CC3633-4FAA-4D4E-A77F-0718240A15FB}
