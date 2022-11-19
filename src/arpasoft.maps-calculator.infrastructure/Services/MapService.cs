@@ -6,6 +6,7 @@ namespace arpasoft.maps_calculator.infrastructure.Services
 {
     public class MapService<T> : IMapService<T> where T : IEntityWithID
     {
+        #region Map
         private readonly Map<T> _map;
 
         public MapService()
@@ -16,11 +17,9 @@ namespace arpasoft.maps_calculator.infrastructure.Services
                 Edges = new List<Edge<T>>()
             };
         }
+        #endregion
 
-        public void AddEdge(int id1, int id2)
-        {
-        }
-
+        #region Node
         public void AddNode(T node)
         {
             if (!IsValidMap())
@@ -29,24 +28,9 @@ namespace arpasoft.maps_calculator.infrastructure.Services
             _map!.Nodes!.Add(node);
         }
 
-        public bool EdgeExists(int id1, int id2)
-        {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<T>? GetAdjacentNodesByID(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<T>? GetAllNodes()
         {
             return _map?.Nodes;
-        }
-
-        public IEnumerable<TreeNode<T>>? GetPaths(int idStart, int idEnd)
-        {
-            throw new NotImplementedException();
         }
 
         public int GetNodesCount()
@@ -56,6 +40,30 @@ namespace arpasoft.maps_calculator.infrastructure.Services
 
             return _map!.Nodes!.Count;
         }
+        #endregion
+
+        #region Edge
+        public void AddEdge(int id1, int id2)
+        {
+        }
+
+        public bool EdgeExists(int id1, int id2)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
+
+        #region Calculation
+        public IEnumerable<T>? GetAdjacentNodesByID(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IEnumerable<TreeNode<T>>? GetPaths(int idStart, int idEnd)
+        {
+            throw new NotImplementedException();
+        }
+        #endregion
 
         #region Utils
         private bool IsValidMap()
