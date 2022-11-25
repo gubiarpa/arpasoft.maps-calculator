@@ -15,7 +15,7 @@ namespace arpasoft.maps_calculator.unit_testing.Helpers
         #endregion
 
         #region Data
-        public string Name { get; set; }
+        public string? Name { get; set; }
         #endregion
     }
 }

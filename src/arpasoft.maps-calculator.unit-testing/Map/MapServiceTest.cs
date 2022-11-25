@@ -1,6 +1,5 @@
 ﻿using arpasoft.maps_calculator.core.Services;
 using arpasoft.maps_calculator.unit_testing.Helpers;
-using System.Linq;
 using Xunit;
 
 namespace arpasoft.maps_calculator.unit_testing.Map
@@ -27,7 +26,7 @@ namespace arpasoft.maps_calculator.unit_testing.Map
 
             /// Act
             var countNodes = _mapService.GetNodesCount();
-            
+
             /// Assert
             Assert.Equal(6, countNodes);
         }
