@@ -6,6 +6,7 @@ namespace arpasoft.maps_calculator.winforms
     {
         private const int FIX_POSITION_X = 16;
         private const int FIX_POSITION_Y = 44;
+        private const int RADIUS = 10;
 
         #region Form-Mode
         private Graphics? _myGraphics;
@@ -27,10 +28,14 @@ namespace arpasoft.maps_calculator.winforms
 
         private void picMap_Click(object sender, EventArgs e)
         {
-            if (_formMode == FormMode.ReadOnly)
-                return;
-
-            DrawMapNode();
+            switch (_formMode)
+            {
+                case FormMode.AddingNodes:
+                    DrawMapNode();
+                    break;
+                case FormMode.AddingEdges:
+                    break;
+            }
         }
 
         private void btnAddNodes_Click(object sender, EventArgs e)
@@ -44,6 +49,11 @@ namespace arpasoft.maps_calculator.winforms
 
         private void btnAddEdges_Click(object sender, EventArgs e)
         {
+            btnAddEdges.Text = _formMode == FormMode.AddingEdges ? "Add Edges" : "Exit";
+            btnAddNodes.Enabled = _formMode == FormMode.AddingEdges;
+            picMap.Cursor = _formMode == FormMode.AddingEdges ? Cursors.Arrow : Cursors.Hand;
+
+            _formMode =  _formMode == FormMode.ReadOnly ? FormMode.AddingEdges : FormMode.ReadOnly;
         }
         #endregion
 
@@ -61,7 +71,7 @@ namespace arpasoft.maps_calculator.winforms
             var x = mousePositionX - locationX - mapLocationX - FIX_POSITION_X;
             var y = mousePositionY - locationY - mapLocationY - FIX_POSITION_Y;
 
-            _myGraphics!.DrawEllipse(new Pen(Color.Red, 2), x, y, 10, 10);
+            _myGraphics!.DrawEllipse(new Pen(Color.Red, 2), x, y, RADIUS, RADIUS);
         }
         #endregion
 
