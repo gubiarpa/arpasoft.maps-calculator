@@ -31,8 +31,6 @@
             this.picMap = new System.Windows.Forms.PictureBox();
             this.btnAddNodes = new System.Windows.Forms.Button();
             this.groupMain = new System.Windows.Forms.GroupBox();
-            this.btnSave = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
             this.btnAddEdges = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picMap)).BeginInit();
             this.groupMain.SuspendLayout();
@@ -63,8 +61,6 @@
             // 
             // groupMain
             // 
-            this.groupMain.Controls.Add(this.btnSave);
-            this.groupMain.Controls.Add(this.btnCancel);
             this.groupMain.Controls.Add(this.btnAddEdges);
             this.groupMain.Controls.Add(this.btnAddNodes);
             this.groupMain.Location = new System.Drawing.Point(12, 12);
@@ -74,24 +70,6 @@
             this.groupMain.TabStop = false;
             this.groupMain.Text = "Mantenimiento";
             // 
-            // btnSave
-            // 
-            this.btnSave.Location = new System.Drawing.Point(1129, 41);
-            this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(142, 29);
-            this.btnSave.TabIndex = 4;
-            this.btnSave.Text = "Save";
-            this.btnSave.UseVisualStyleBackColor = true;
-            // 
-            // btnCancel
-            // 
-            this.btnCancel.Location = new System.Drawing.Point(1277, 41);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(142, 29);
-            this.btnCancel.TabIndex = 3;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            // 
             // btnAddEdges
             // 
             this.btnAddEdges.Location = new System.Drawing.Point(168, 41);
@@ -100,6 +78,7 @@
             this.btnAddEdges.TabIndex = 2;
             this.btnAddEdges.Text = "Add Edges";
             this.btnAddEdges.UseVisualStyleBackColor = true;
+            this.btnAddEdges.Click += new System.EventHandler(this.btnAddEdges_Click);
             // 
             // FrmMain
             // 
@@ -126,7 +105,5 @@
         private Button btnAddNodes;
         private GroupBox groupMain;
         private Button btnAddEdges;
-        private Button btnSave;
-        private Button btnCancel;
     }
 }

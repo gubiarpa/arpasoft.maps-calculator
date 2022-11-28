@@ -1,3 +1,5 @@
+using arpasoft.maps_calculator.winforms.Utils;
+
 namespace arpasoft.maps_calculator.winforms
 {
     public partial class FrmMain : Form
@@ -6,7 +8,8 @@ namespace arpasoft.maps_calculator.winforms
         private const int FIX_POSITION_Y = 44;
 
         #region Form-Mode
-        private bool _addingNodes = false;
+        private Graphics? _myGraphics;
+        private FormMode _formMode = FormMode.ReadOnly;
         #endregion
 
         #region Constructor
@@ -19,13 +22,12 @@ namespace arpasoft.maps_calculator.winforms
         #region Events
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            _addingNodes = false;
-            btnSave.Visible = btnCancel.Visible = _addingNodes;
+            _myGraphics = picMap.CreateGraphics();
         }
 
         private void picMap_Click(object sender, EventArgs e)
         {
-            if (!_addingNodes)
+            if (_formMode == FormMode.ReadOnly)
                 return;
 
             DrawMapNode();
@@ -33,10 +35,15 @@ namespace arpasoft.maps_calculator.winforms
 
         private void btnAddNodes_Click(object sender, EventArgs e)
         {
-            _addingNodes = !_addingNodes;
-            btnSave.Visible = btnCancel.Visible = _addingNodes;
-            btnAddEdges.Enabled = !_addingNodes;
-            picMap.Cursor = _addingNodes ? Cursors.Cross : Cursors.Arrow;
+            btnAddNodes.Text = _formMode == FormMode.AddingNodes ? "Add Nodes" : "Exit";
+            btnAddEdges.Enabled = _formMode == FormMode.AddingNodes;
+            picMap.Cursor = _formMode == FormMode.AddingNodes ? Cursors.Arrow : Cursors.Cross;
+
+            _formMode =  _formMode == FormMode.ReadOnly ? FormMode.AddingNodes : FormMode.ReadOnly;
+        }
+
+        private void btnAddEdges_Click(object sender, EventArgs e)
+        {
         }
         #endregion
 
@@ -54,9 +61,31 @@ namespace arpasoft.maps_calculator.winforms
             var x = mousePositionX - locationX - mapLocationX - FIX_POSITION_X;
             var y = mousePositionY - locationY - mapLocationY - FIX_POSITION_Y;
 
-            var myGraphics = picMap.CreateGraphics();
-            var myPen = new Pen(Color.Red, 2);
-            myGraphics.DrawEllipse(myPen, x, y, 10, 10);
+            _myGraphics!.DrawEllipse(new Pen(Color.Red, 2), x, y, 10, 10);
+        }
+        #endregion
+
+        #region Utils
+        private bool ContinueAddingNodeAction()
+        {
+            return
+                _formMode == FormMode.ReadOnly &&
+                MessageBox.Show(
+                    this,
+                    "Esta opción no es reversible, ¿Está seguro que desea agregar nodos?",
+                    "Adding Nodes",
+                    MessageBoxButtons.YesNo) == DialogResult.No;
+        }
+
+        private bool ContinueAddingEdgeAction()
+        {
+            return
+                _formMode == FormMode.ReadOnly &&
+                MessageBox.Show(
+                    this,
+                    "Esta opción no es reversible, ¿Está seguro que desea agregar aristas?",
+                    "Adding Edges",
+                    MessageBoxButtons.YesNo) == DialogResult.No;
         }
         #endregion
     }
