@@ -7,6 +7,5 @@ namespace arpasoft.maps_calculator.core.Entities
         public T? NodeStart { get; set; }
         public T? NodeEnd { get; set; }
         public float Length { get; set; }
-        public float Weight { get; set; }
     }
 }
