@@ -31,6 +31,8 @@
             this.picMap = new System.Windows.Forms.PictureBox();
             this.btnAddNodes = new System.Windows.Forms.Button();
             this.groupMain = new System.Windows.Forms.GroupBox();
+            this.btnSave = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
             this.btnAddEdges = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picMap)).BeginInit();
             this.groupMain.SuspendLayout();
@@ -41,7 +43,7 @@
             this.picMap.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.picMap.Image = global::arpasoft.maps_calculator.winforms.Properties.Resources.Mapa_General;
-            this.picMap.Location = new System.Drawing.Point(12, 12);
+            this.picMap.Location = new System.Drawing.Point(12, 114);
             this.picMap.Name = "picMap";
             this.picMap.Size = new System.Drawing.Size(1435, 851);
             this.picMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -61,18 +63,38 @@
             // 
             // groupMain
             // 
+            this.groupMain.Controls.Add(this.btnSave);
+            this.groupMain.Controls.Add(this.btnCancel);
             this.groupMain.Controls.Add(this.btnAddEdges);
             this.groupMain.Controls.Add(this.btnAddNodes);
-            this.groupMain.Location = new System.Drawing.Point(12, 869);
+            this.groupMain.Location = new System.Drawing.Point(12, 12);
             this.groupMain.Name = "groupMain";
-            this.groupMain.Size = new System.Drawing.Size(1435, 184);
+            this.groupMain.Size = new System.Drawing.Size(1435, 96);
             this.groupMain.TabIndex = 2;
             this.groupMain.TabStop = false;
             this.groupMain.Text = "Mantenimiento";
             // 
+            // btnSave
+            // 
+            this.btnSave.Location = new System.Drawing.Point(1129, 41);
+            this.btnSave.Name = "btnSave";
+            this.btnSave.Size = new System.Drawing.Size(142, 29);
+            this.btnSave.TabIndex = 4;
+            this.btnSave.Text = "Save";
+            this.btnSave.UseVisualStyleBackColor = true;
+            // 
+            // btnCancel
+            // 
+            this.btnCancel.Location = new System.Drawing.Point(1277, 41);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(142, 29);
+            this.btnCancel.TabIndex = 3;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            // 
             // btnAddEdges
             // 
-            this.btnAddEdges.Location = new System.Drawing.Point(20, 89);
+            this.btnAddEdges.Location = new System.Drawing.Point(168, 41);
             this.btnAddEdges.Name = "btnAddEdges";
             this.btnAddEdges.Size = new System.Drawing.Size(142, 29);
             this.btnAddEdges.TabIndex = 2;
@@ -84,13 +106,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(1459, 1065);
+            this.ClientSize = new System.Drawing.Size(1459, 988);
             this.Controls.Add(this.groupMain);
             this.Controls.Add(this.picMap);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "FrmMain";
             this.Text = "Map Reader";
+            this.Load += new System.EventHandler(this.FrmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picMap)).EndInit();
             this.groupMain.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -103,5 +126,7 @@
         private Button btnAddNodes;
         private GroupBox groupMain;
         private Button btnAddEdges;
+        private Button btnSave;
+        private Button btnCancel;
     }
 }
