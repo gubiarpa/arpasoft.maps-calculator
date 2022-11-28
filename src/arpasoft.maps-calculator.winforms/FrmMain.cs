@@ -40,6 +40,9 @@ namespace arpasoft.maps_calculator.winforms
 
         private void btnAddNodes_Click(object sender, EventArgs e)
         {
+            if (AbortAddingNodeAction())
+                return;
+
             btnAddNodes.Text = _formMode == FormMode.AddingNodes ? "Add Nodes" : "Exit";
             btnAddEdges.Enabled = _formMode == FormMode.AddingNodes;
             picMap.Cursor = _formMode == FormMode.AddingNodes ? Cursors.Arrow : Cursors.Cross;
@@ -49,6 +52,9 @@ namespace arpasoft.maps_calculator.winforms
 
         private void btnAddEdges_Click(object sender, EventArgs e)
         {
+            if (AbortAddingEdgeAction())
+                return;
+
             btnAddEdges.Text = _formMode == FormMode.AddingEdges ? "Add Edges" : "Exit";
             btnAddNodes.Enabled = _formMode == FormMode.AddingEdges;
             picMap.Cursor = _formMode == FormMode.AddingEdges ? Cursors.Arrow : Cursors.Hand;
@@ -76,7 +82,7 @@ namespace arpasoft.maps_calculator.winforms
         #endregion
 
         #region Utils
-        private bool ContinueAddingNodeAction()
+        private bool AbortAddingNodeAction()
         {
             return
                 _formMode == FormMode.ReadOnly &&
@@ -87,7 +93,7 @@ namespace arpasoft.maps_calculator.winforms
                     MessageBoxButtons.YesNo) == DialogResult.No;
         }
 
-        private bool ContinueAddingEdgeAction()
+        private bool AbortAddingEdgeAction()
         {
             return
                 _formMode == FormMode.ReadOnly &&
