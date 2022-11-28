@@ -5,19 +5,29 @@ namespace arpasoft.maps_calculator.winforms
         private const int FIX_POSITION_X = 26;
         private const int FIX_POSITION_Y = 55;
 
+        private bool _addingNodes = false;
+
         public FrmMain()
         {
             InitializeComponent();
         }
 
-        private void FrmMain_Load(object sender, EventArgs e)
-        {
-        }
-
+        #region Events
         private void picMap_Click(object sender, EventArgs e)
         {
+            if (!_addingNodes)
+                return;
+
             DrawMapNode();
         }
+
+        private void btnAddNodes_Click(object sender, EventArgs e)
+        {
+            _addingNodes = !_addingNodes;
+            btnAddEdges.Enabled = !_addingNodes;
+        }
+        #endregion
+
 
         #region Drawing
         private void DrawMapNode()

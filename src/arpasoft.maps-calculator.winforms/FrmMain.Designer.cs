@@ -57,6 +57,7 @@
             this.btnAddNodes.TabIndex = 1;
             this.btnAddNodes.Text = "Add Nodes";
             this.btnAddNodes.UseVisualStyleBackColor = true;
+            this.btnAddNodes.Click += new System.EventHandler(this.btnAddNodes_Click);
             // 
             // groupMain
             // 
@@ -90,7 +91,6 @@
             this.MinimizeBox = false;
             this.Name = "FrmMain";
             this.Text = "Map Reader";
-            this.Load += new System.EventHandler(this.FrmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picMap)).EndInit();
             this.groupMain.ResumeLayout(false);
             this.ResumeLayout(false);
