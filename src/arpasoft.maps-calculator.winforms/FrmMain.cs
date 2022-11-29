@@ -67,6 +67,19 @@ namespace arpasoft.maps_calculator.winforms
         #region Drawing
         private void DrawMapNode()
         {
+            var coordinate = GetCoordinate();
+            _myGraphics!.DrawEllipse(new Pen(Color.Red, 2), coordinate.X, coordinate.Y, RADIUS, RADIUS);
+        }
+
+        private void DrawMapEdge()
+        {
+
+        }
+        #endregion
+
+        #region Utils
+        private Coordinate GetCoordinate()
+        {
             var mousePositionX = MousePosition.X;
             var mousePositionY = MousePosition.Y;
             var locationX = Location.X;
@@ -77,11 +90,10 @@ namespace arpasoft.maps_calculator.winforms
             var x = mousePositionX - locationX - mapLocationX - FIX_POSITION_X;
             var y = mousePositionY - locationY - mapLocationY - FIX_POSITION_Y;
 
-            _myGraphics!.DrawEllipse(new Pen(Color.Red, 2), x, y, RADIUS, RADIUS);
+            var coordinate = new Coordinate() { X = x, Y = y };
+            return coordinate;
         }
-        #endregion
 
-        #region Utils
         private bool AbortAddingNodeAction()
         {
             return
