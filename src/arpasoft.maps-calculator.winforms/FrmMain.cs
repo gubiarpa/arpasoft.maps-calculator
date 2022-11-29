@@ -9,6 +9,8 @@ namespace arpasoft.maps_calculator.winforms
         private const int FIX_POSITION_X = 16;
         private const int FIX_POSITION_Y = 44;
         private const int RADIUS = 10;
+        private const int ERROR_LINE_X = 10;
+        private const int ERROR_LINE_Y = 10;
         #endregion
 
         #region Map
@@ -18,6 +20,7 @@ namespace arpasoft.maps_calculator.winforms
         #region Form-Mode
         private Graphics? _myGraphics;
         private FormMode _formMode = FormMode.ReadOnly;
+        private Coordinate? _lastNodeMatched = null;
         #endregion
 
         #region Constructor
@@ -68,6 +71,9 @@ namespace arpasoft.maps_calculator.winforms
             btnAddNodes.Enabled = _formMode == FormMode.AddingEdges;
             picMap.Cursor = _formMode == FormMode.AddingEdges ? Cursors.Arrow : Cursors.Hand;
 
+            if (_formMode == FormMode.AddingEdges)
+                _lastNodeMatched = null;
+
             _formMode = _formMode == FormMode.ReadOnly ? FormMode.AddingEdges : FormMode.ReadOnly;
         }
         #endregion
@@ -78,6 +84,8 @@ namespace arpasoft.maps_calculator.winforms
         {
             var coordinate = GetCoordinate();
             _mapService.AddNode(coordinate);
+
+            /// Drawing...
             _myGraphics!.DrawEllipse(new Pen(Color.Red, 2), coordinate.X, coordinate.Y, RADIUS, RADIUS);
         }
 
@@ -86,6 +94,15 @@ namespace arpasoft.maps_calculator.winforms
             var coordinate = GetCoordinate();
             var matchedNodeId = _mapService.GetNodeIdByValue(coordinate, RADIUS);
             Text = matchedNodeId.ToString();
+
+            /// Drawing
+            if (matchedNodeId != null && _lastNodeMatched != null)
+                _myGraphics!.DrawLine(new Pen(Color.Red, 2),
+                    _lastNodeMatched!.X, _lastNodeMatched!.Y + ERROR_LINE_Y,
+                    coordinate.X, coordinate.Y + ERROR_LINE_Y);
+
+            _lastNodeMatched = coordinate;
+
         }
         #endregion
 
