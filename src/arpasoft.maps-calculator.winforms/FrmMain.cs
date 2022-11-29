@@ -1,12 +1,20 @@
+using arpasoft.maps_calculator.core.Services;
+using arpasoft.maps_calculator.infrastructure.Services;
 using arpasoft.maps_calculator.winforms.Utils;
 
 namespace arpasoft.maps_calculator.winforms
 {
     public partial class FrmMain : Form
     {
+        #region Config
         private const int FIX_POSITION_X = 16;
         private const int FIX_POSITION_Y = 44;
         private const int RADIUS = 10;
+        #endregion
+
+        #region Map
+        private IMapService<Coordinate> _mapService;
+        #endregion
 
         #region Form-Mode
         private Graphics? _myGraphics;
@@ -14,15 +22,17 @@ namespace arpasoft.maps_calculator.winforms
         #endregion
 
         #region Constructor
-        public FrmMain()
+        public FrmMain(IMapService<Coordinate> mapService)
         {
             InitializeComponent();
+            _mapService = mapService;
         }
         #endregion
 
         #region Events
         private void FrmMain_Load(object sender, EventArgs e)
         {
+            _mapService = new MapService<Coordinate>();
             _myGraphics = picMap.CreateGraphics();
         }
 
@@ -68,6 +78,7 @@ namespace arpasoft.maps_calculator.winforms
         private void DrawMapNode()
         {
             var coordinate = GetCoordinate();
+            _mapService.AddNode(coordinate);
             _myGraphics!.DrawEllipse(new Pen(Color.Red, 2), coordinate.X, coordinate.Y, RADIUS, RADIUS);
         }
 
@@ -90,7 +101,8 @@ namespace arpasoft.maps_calculator.winforms
             var x = mousePositionX - locationX - mapLocationX - FIX_POSITION_X;
             var y = mousePositionY - locationY - mapLocationY - FIX_POSITION_Y;
 
-            var coordinate = new Coordinate() { X = x, Y = y };
+            var nodesCount = _mapService.GetNodesCount();
+            var coordinate = new Coordinate(nodesCount + 1) { X = x, Y = y };
             return coordinate;
         }
 

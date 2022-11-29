@@ -10,6 +10,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\arpasoft.maps-calculator.core\arpasoft.maps-calculator.core.csproj" />
+    <ProjectReference Include="..\arpasoft.maps-calculator.infrastructure\arpasoft.maps-calculator.infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
