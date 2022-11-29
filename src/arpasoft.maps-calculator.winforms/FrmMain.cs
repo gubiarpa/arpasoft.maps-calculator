@@ -75,7 +75,7 @@ namespace arpasoft.maps_calculator.winforms
             picMap.Cursor = _formMode == FormMode.AddingEdges ? Cursors.Arrow : Cursors.Hand;
 
             if (_formMode == FormMode.AddingEdges)
-                _lastNodeMatched = null;
+                _lastNodeMatched = null; // Release last node matched
 
             _formMode = _formMode == FormMode.ReadOnly ? FormMode.AddingEdges : FormMode.ReadOnly;
         }
@@ -87,8 +87,6 @@ namespace arpasoft.maps_calculator.winforms
         {
             var coordinate = GetCoordinate();
             _mapService.AddNode(coordinate);
-
-            /// Drawing...
             _myGraphics!.DrawEllipse(new Pen(Color.Red, 2), coordinate.X, coordinate.Y, RADIUS, RADIUS);
         }
 
@@ -97,11 +95,13 @@ namespace arpasoft.maps_calculator.winforms
             var coordinate = GetCoordinate();
             var matchedNode = _mapService.GetNodeByValue(coordinate);
 
-            /// Drawing
             if (matchedNode != null && _lastNodeMatched != null)
+            {
+                _mapService.AddEdge(_lastNodeMatched.ID, matchedNode.ID);
                 _myGraphics!.DrawLine(new Pen(Color.Red, 2),
                     _lastNodeMatched!.X + ERROR_LINE_X1, _lastNodeMatched!.Y + ERROR_LINE_Y1,
                     matchedNode.X + ERROR_LINE_X2, matchedNode.Y + ERROR_LINE_Y2);
+            }
 
             _lastNodeMatched = matchedNode;
 
