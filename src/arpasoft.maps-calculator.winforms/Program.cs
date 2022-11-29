@@ -1,5 +1,4 @@
-using arpasoft.maps_calculator.infrastructure.Services;
-using arpasoft.maps_calculator.winforms.Utils;
+using arpasoft.maps_calculator.winforms.Map;
 
 namespace arpasoft.maps_calculator.winforms
 {
@@ -14,7 +13,7 @@ namespace arpasoft.maps_calculator.winforms
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new FrmMain(new MapService<Coordinate>()));
+            Application.Run(new FrmMain(new MapCoordinateService()));
         }
     }
 }

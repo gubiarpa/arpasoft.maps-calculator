@@ -14,8 +14,16 @@ namespace arpasoft.maps_calculator.winforms.Utils
         }
         #endregion
 
+        #region Data
         public int X { get; set; }
         public int Y { get; set; }
+        #endregion
 
+        #region Methods
+        public bool IsNear(Coordinate coordinate, int error)
+        {
+            return (Math.Abs(X - coordinate.X) <= error && Math.Abs(Y - coordinate.Y) <= error);
+        }
+        #endregion
     }
 }

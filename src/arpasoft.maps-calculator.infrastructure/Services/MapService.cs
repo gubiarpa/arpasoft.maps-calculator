@@ -4,7 +4,7 @@ using arpasoft.maps_calculator.core.Services;
 
 namespace arpasoft.maps_calculator.infrastructure.Services
 {
-    public class MapService<T> : IMapService<T> where T : IEntityWithID
+    public abstract class MapService<T> : IMapService<T> where T : IEntityWithID
     {
         #region Map
         private readonly Map<T> _map;
@@ -40,6 +40,8 @@ namespace arpasoft.maps_calculator.infrastructure.Services
 
             return _map!.Nodes!.Count;
         }
+
+        public abstract int GetNodeIdByValue(T data, int error);
         #endregion
 
         #region Edge

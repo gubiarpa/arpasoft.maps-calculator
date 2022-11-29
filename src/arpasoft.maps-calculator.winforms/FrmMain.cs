@@ -1,5 +1,4 @@
 using arpasoft.maps_calculator.core.Services;
-using arpasoft.maps_calculator.infrastructure.Services;
 using arpasoft.maps_calculator.winforms.Utils;
 
 namespace arpasoft.maps_calculator.winforms
@@ -32,7 +31,6 @@ namespace arpasoft.maps_calculator.winforms
         #region Events
         private void FrmMain_Load(object sender, EventArgs e)
         {
-            _mapService = new MapService<Coordinate>();
             _myGraphics = picMap.CreateGraphics();
         }
 
@@ -44,6 +42,7 @@ namespace arpasoft.maps_calculator.winforms
                     DrawMapNode();
                     break;
                 case FormMode.AddingEdges:
+                    DrawMapEdge();
                     break;
             }
         }
@@ -57,7 +56,7 @@ namespace arpasoft.maps_calculator.winforms
             btnAddEdges.Enabled = _formMode == FormMode.AddingNodes;
             picMap.Cursor = _formMode == FormMode.AddingNodes ? Cursors.Arrow : Cursors.Cross;
 
-            _formMode =  _formMode == FormMode.ReadOnly ? FormMode.AddingNodes : FormMode.ReadOnly;
+            _formMode = _formMode == FormMode.ReadOnly ? FormMode.AddingNodes : FormMode.ReadOnly;
         }
 
         private void btnAddEdges_Click(object sender, EventArgs e)
@@ -69,7 +68,7 @@ namespace arpasoft.maps_calculator.winforms
             btnAddNodes.Enabled = _formMode == FormMode.AddingEdges;
             picMap.Cursor = _formMode == FormMode.AddingEdges ? Cursors.Arrow : Cursors.Hand;
 
-            _formMode =  _formMode == FormMode.ReadOnly ? FormMode.AddingEdges : FormMode.ReadOnly;
+            _formMode = _formMode == FormMode.ReadOnly ? FormMode.AddingEdges : FormMode.ReadOnly;
         }
         #endregion
 
@@ -84,7 +83,9 @@ namespace arpasoft.maps_calculator.winforms
 
         private void DrawMapEdge()
         {
-
+            var coordinate = GetCoordinate();
+            var matchedNodeId = _mapService.GetNodeIdByValue(coordinate, RADIUS);
+            Text = matchedNodeId.ToString();
         }
         #endregion
 
