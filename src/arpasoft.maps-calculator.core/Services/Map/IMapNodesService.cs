@@ -7,6 +7,6 @@ namespace arpasoft.maps_calculator.core.Services.Map
         void AddNode(T node);
         IEnumerable<T>? GetAllNodes();
         int GetNodesCount();
-        int? GetNodeIdByValue(T data, int error);
+        T? GetNodeByValue(T data);
     }
 }

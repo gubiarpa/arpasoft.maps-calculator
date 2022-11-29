@@ -9,8 +9,11 @@ namespace arpasoft.maps_calculator.winforms
         private const int FIX_POSITION_X = 16;
         private const int FIX_POSITION_Y = 44;
         private const int RADIUS = 10;
-        private const int ERROR_LINE_X = 10;
-        private const int ERROR_LINE_Y = 10;
+        /// ERROR
+        private const int ERROR_LINE_X1 = 5;
+        private const int ERROR_LINE_Y1 = 5;
+        private const int ERROR_LINE_X2 = 5;
+        private const int ERROR_LINE_Y2 = 5;
         #endregion
 
         #region Map
@@ -92,16 +95,15 @@ namespace arpasoft.maps_calculator.winforms
         private void DrawMapEdge()
         {
             var coordinate = GetCoordinate();
-            var matchedNodeId = _mapService.GetNodeIdByValue(coordinate, RADIUS);
-            Text = matchedNodeId.ToString();
+            var matchedNode = _mapService.GetNodeByValue(coordinate);
 
             /// Drawing
-            if (matchedNodeId != null && _lastNodeMatched != null)
+            if (matchedNode != null && _lastNodeMatched != null)
                 _myGraphics!.DrawLine(new Pen(Color.Red, 2),
-                    _lastNodeMatched!.X, _lastNodeMatched!.Y + ERROR_LINE_Y,
-                    coordinate.X, coordinate.Y + ERROR_LINE_Y);
+                    _lastNodeMatched!.X + ERROR_LINE_X1, _lastNodeMatched!.Y + ERROR_LINE_Y1,
+                    matchedNode.X + ERROR_LINE_X2, matchedNode.Y + ERROR_LINE_Y2);
 
-            _lastNodeMatched = coordinate;
+            _lastNodeMatched = matchedNode;
 
         }
         #endregion

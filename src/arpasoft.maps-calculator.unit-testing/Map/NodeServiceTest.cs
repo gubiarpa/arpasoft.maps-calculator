@@ -5,7 +5,7 @@ namespace arpasoft.maps_calculator.unit_testing.Map
 {
     public class NodeServiceTest : MapService<NodeTest>
     {
-        public override int? GetNodeIdByValue(NodeTest data, int error)
+        public override NodeTest? GetNodeByValue(NodeTest data)
         {
             throw new System.NotImplementedException();
         }

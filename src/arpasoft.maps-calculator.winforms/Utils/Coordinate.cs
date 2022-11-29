@@ -20,9 +20,9 @@ namespace arpasoft.maps_calculator.winforms.Utils
         #endregion
 
         #region Methods
-        public bool IsNear(Coordinate coordinate, int error)
+        public bool IsNear(Coordinate coordinate, int errorX, int errorY)
         {
-            return (Math.Abs(X - coordinate.X) <= error && Math.Abs(Y - coordinate.Y) <= error);
+            return (Math.Abs(X - coordinate.X) <= errorX && Math.Abs(Y - coordinate.Y) <= errorY);
         }
         #endregion
     }

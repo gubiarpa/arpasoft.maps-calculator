@@ -41,7 +41,7 @@ namespace arpasoft.maps_calculator.infrastructure.Services
             return _map!.Nodes!.Count;
         }
 
-        public abstract int? GetNodeIdByValue(T data, int error);
+        public abstract T? GetNodeByValue(T data);
         #endregion
 
         #region Edge

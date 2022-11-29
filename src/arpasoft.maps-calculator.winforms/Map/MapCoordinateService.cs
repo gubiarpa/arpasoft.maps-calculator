@@ -5,10 +5,19 @@ namespace arpasoft.maps_calculator.winforms.Map
 {
     public class MapCoordinateService : MapService<Coordinate>
     {
-        public override int? GetNodeIdByValue(Coordinate data, int error)
+        private int _errorX;
+        private int _errorY;
+
+        public MapCoordinateService(int errorX, int errorY) : base()
         {
-            var matchNode = GetAllNodes()?.FirstOrDefault(node => node.IsNear(data, error));
-            return matchNode?.ID;
+            _errorX = errorX;
+            _errorY = errorY;
+        }
+
+        public override Coordinate? GetNodeByValue(Coordinate data)
+        {
+            var matchNode = GetAllNodes()?.FirstOrDefault(node => node.IsNear(data, _errorX, _errorY));
+            return matchNode;
         }
     }
 }

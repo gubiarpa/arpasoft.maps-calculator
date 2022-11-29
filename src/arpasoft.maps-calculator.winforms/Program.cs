@@ -13,7 +13,7 @@ namespace arpasoft.maps_calculator.winforms
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new FrmMain(new MapCoordinateService()));
+            Application.Run(new FrmMain(new MapCoordinateService(10, 10)));
         }
     }
 }
