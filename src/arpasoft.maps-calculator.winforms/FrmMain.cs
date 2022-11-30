@@ -125,49 +125,63 @@ namespace arpasoft.maps_calculator.winforms
         #region DataIO
         private void LoadAndPrintNodes()
         {
-            /// 1. Read file
-            var path = Path.Combine(Environment.CurrentDirectory, "..\\..\\..\\Data\\");
-            var nodesCsv = File.ReadAllText(Path.Combine(path, "Nodes.csv"));
-            var nodeLines = nodesCsv.Split('\n');
-
-            /// 2. Load and print nodes
-            foreach (var nodeLine in nodeLines)
+            try
             {
-                try
+                /// 1. Read file
+                var path = Path.Combine(Environment.CurrentDirectory, "..\\..\\..\\Data\\");
+                var nodesCsv = File.ReadAllText(Path.Combine(path, "Nodes.csv"));
+                var nodeLines = nodesCsv.Split('\n');
+
+                /// 2. Load and print nodes
+                foreach (var nodeLine in nodeLines)
                 {
-                    var fields = nodeLine.Split(',');
-                    var nodesCount = _mapService.GetNodesCount();
-                    var newNode = new Coordinate(nodesCount + 1)
+                    try
                     {
-                        X = int.Parse(fields[0]),
-                        Y = int.Parse(fields[1]),
-                    };
-                    AddNodeAndDrawMap(newNode);
+                        var fields = nodeLine.Split(',');
+                        var nodesCount = _mapService.GetNodesCount();
+                        var newNode = new Coordinate(nodesCount + 1)
+                        {
+                            X = int.Parse(fields[0]),
+                            Y = int.Parse(fields[1]),
+                        };
+                        AddNodeAndDrawMap(newNode);
+                    }
+                    catch
+                    {
+                    }
                 }
-                catch
-                {
-                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
         private void SaveNodes()
         {
-            /// 1. Get file and structure
-            var path = Path.Combine(Environment.CurrentDirectory, "..\\..\\..\\Data\\");
-            var strBuilder = new StringBuilder();
-            var nodes = _mapService.GetAllNodes()?.ToList();
-
-            if (nodes == null)
-                return;
-
-            /// 2. Build content
-            foreach (var node in nodes)
+            try
             {
-                strBuilder.AppendLine($"{node.X},{node.Y}");
-            }
+                /// 1. Get file and structure
+                var path = Path.Combine(Environment.CurrentDirectory, "..\\..\\..\\Data\\");
+                var strBuilder = new StringBuilder();
+                var nodes = _mapService.GetAllNodes()?.ToList();
 
-            /// 3. Write content
-            File.WriteAllText(Path.Combine(path, "Nodes.csv"), strBuilder.ToString());
+                if (nodes == null)
+                    return;
+
+                /// 2. Build content
+                foreach (var node in nodes)
+                {
+                    strBuilder.AppendLine($"{node.X},{node.Y}");
+                }
+
+                /// 3. Write content
+                File.WriteAllText(Path.Combine(path, "Nodes.csv"), strBuilder.ToString());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         #endregion
 
