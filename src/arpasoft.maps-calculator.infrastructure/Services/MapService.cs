@@ -45,22 +45,22 @@ namespace arpasoft.maps_calculator.infrastructure.Services
         #endregion
 
         #region Edge
-        public void AddEdge(int id1, int id2)
+        public bool AddEdge(int id1, int id2)
         {
             if (!IsValidMap())
-                return;
+                return false;
 
             if (id1 == id2)
-                return;
+                return false;
 
             if (EdgeExists(id1, id2))
-                return;
+                return false;
 
             var node1 = _map!.Nodes!.SingleOrDefault(x => x.ID == id1);
             var node2 = _map!.Nodes!.SingleOrDefault(x => x.ID == id2);
 
             if (node1 == null || node2 == null)
-                return;
+                return false;
 
             var edge = new Edge<T>()
             {
@@ -69,6 +69,8 @@ namespace arpasoft.maps_calculator.infrastructure.Services
             };
 
             _map.Edges!.Add(edge);
+
+            return true;
         }
 
         public bool EdgeExists(int id1, int id2)

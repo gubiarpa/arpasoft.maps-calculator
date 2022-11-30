@@ -29,6 +29,6 @@ namespace arpasoft.maps_calculator.core.Services.Map
         /// </summary>
         /// <param name="node1">ID del Nodo 1</param>
         /// <param name="node2">ID del Nodo 2</param>
-        void AddEdge(int id1, int id2);
+        bool AddEdge(int id1, int id2);
     }
 }
