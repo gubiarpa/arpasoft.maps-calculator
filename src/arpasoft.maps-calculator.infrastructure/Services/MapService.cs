@@ -18,7 +18,7 @@ namespace arpasoft.maps_calculator.infrastructure.Services
             };
         }
         #endregion
-
+         
         #region Node
         public void AddNode(T node)
         {

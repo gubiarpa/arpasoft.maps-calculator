@@ -1,5 +1,6 @@
 using arpasoft.maps_calculator.core.Services;
 using arpasoft.maps_calculator.winforms.Utils;
+using System.Text;
 
 namespace arpasoft.maps_calculator.winforms
 {
@@ -71,11 +72,22 @@ namespace arpasoft.maps_calculator.winforms
             if (AbortAddingNodeAction())
                 return;
 
-            btnAddNodes.Text = _formMode == FormMode.AddingNodes ? "Add Nodes" : "Exit";
-            btnAddEdges.Enabled = _formMode == FormMode.AddingNodes;
-            picMap.Cursor = _formMode == FormMode.AddingNodes ? Cursors.Arrow : Cursors.Cross;
-
-            _formMode = _formMode == FormMode.ReadOnly ? FormMode.AddingNodes : FormMode.ReadOnly;
+            switch (_formMode)
+            {
+                case FormMode.AddingNodes:
+                    btnAddNodes.Text = "Add Nodes";
+                    btnAddEdges.Enabled = true;
+                    picMap.Cursor = Cursors.Arrow;
+                    SaveNodes();
+                    _formMode = FormMode.ReadOnly;
+                    break;
+                case FormMode.ReadOnly:
+                    btnAddNodes.Text = "Exit";
+                    btnAddEdges.Enabled = false;
+                    picMap.Cursor = Cursors.Cross;
+                    _formMode = FormMode.AddingNodes;
+                    break;
+            }
         }
 
         private void btnAddEdges_Click(object sender, EventArgs e)
@@ -110,7 +122,7 @@ namespace arpasoft.maps_calculator.winforms
         }
         #endregion
 
-        #region DataLoaders
+        #region DataIO
         private void LoadAndPrintNodes()
         {
             /// 1. Read file
@@ -136,6 +148,26 @@ namespace arpasoft.maps_calculator.winforms
                 {
                 }
             }
+        }
+
+        private void SaveNodes()
+        {
+            /// 1. Get file and structure
+            var path = Path.Combine(Environment.CurrentDirectory, "..\\..\\..\\Data\\");
+            var strBuilder = new StringBuilder();
+            var nodes = _mapService.GetAllNodes()?.ToList();
+
+            if (nodes == null)
+                return;
+
+            /// 2. Build content
+            foreach (var node in nodes)
+            {
+                strBuilder.AppendLine($"{node.X},{node.Y}");
+            }
+
+            /// 3. Write content
+            File.WriteAllText(Path.Combine(path, "Nodes.csv"), strBuilder.ToString());
         }
         #endregion
 
