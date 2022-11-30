@@ -76,9 +76,7 @@ namespace arpasoft.maps_calculator.infrastructure.Services
             if (!IsValidMap())
                 return false;
 
-            var connectionExists = _map.Edges!.Any(x =>
-                (x.NodeStart!.ID == id1 && x.NodeEnd!.ID == id2) ||
-                (x.NodeStart!.ID == id2 && x.NodeEnd!.ID == id1));
+            var connectionExists = _map.Edges!.Any(x => (x.NodeStart!.ID == id1 && x.NodeEnd!.ID == id2));
 
             return connectionExists;
         }
