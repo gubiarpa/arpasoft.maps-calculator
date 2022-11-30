@@ -32,6 +32,8 @@
             this.btnAddNodes = new System.Windows.Forms.Button();
             this.groupMain = new System.Windows.Forms.GroupBox();
             this.btnAddEdges = new System.Windows.Forms.Button();
+            this.rbtSingleEdge = new System.Windows.Forms.RadioButton();
+            this.rbtDoubleEdge = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.picMap)).BeginInit();
             this.groupMain.SuspendLayout();
             this.SuspendLayout();
@@ -61,6 +63,8 @@
             // 
             // groupMain
             // 
+            this.groupMain.Controls.Add(this.rbtDoubleEdge);
+            this.groupMain.Controls.Add(this.rbtSingleEdge);
             this.groupMain.Controls.Add(this.btnAddEdges);
             this.groupMain.Controls.Add(this.btnAddNodes);
             this.groupMain.Location = new System.Drawing.Point(12, 12);
@@ -80,6 +84,28 @@
             this.btnAddEdges.UseVisualStyleBackColor = true;
             this.btnAddEdges.Click += new System.EventHandler(this.btnAddEdges_Click);
             // 
+            // rbtSingleEdge
+            // 
+            this.rbtSingleEdge.AutoSize = true;
+            this.rbtSingleEdge.Location = new System.Drawing.Point(1238, 43);
+            this.rbtSingleEdge.Name = "rbtSingleEdge";
+            this.rbtSingleEdge.Size = new System.Drawing.Size(71, 24);
+            this.rbtSingleEdge.TabIndex = 3;
+            this.rbtSingleEdge.TabStop = true;
+            this.rbtSingleEdge.Text = "Single";
+            this.rbtSingleEdge.UseVisualStyleBackColor = true;
+            // 
+            // rbtDoubleEdge
+            // 
+            this.rbtDoubleEdge.AutoSize = true;
+            this.rbtDoubleEdge.Location = new System.Drawing.Point(1329, 43);
+            this.rbtDoubleEdge.Name = "rbtDoubleEdge";
+            this.rbtDoubleEdge.Size = new System.Drawing.Size(79, 24);
+            this.rbtDoubleEdge.TabIndex = 4;
+            this.rbtDoubleEdge.TabStop = true;
+            this.rbtDoubleEdge.Text = "Double";
+            this.rbtDoubleEdge.UseVisualStyleBackColor = true;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -95,6 +121,7 @@
             this.Load += new System.EventHandler(this.FrmMain_Load);
             ((System.ComponentModel.ISupportInitialize)(this.picMap)).EndInit();
             this.groupMain.ResumeLayout(false);
+            this.groupMain.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -105,5 +132,7 @@
         private Button btnAddNodes;
         private GroupBox groupMain;
         private Button btnAddEdges;
+        private RadioButton rbtDoubleEdge;
+        private RadioButton rbtSingleEdge;
     }
 }

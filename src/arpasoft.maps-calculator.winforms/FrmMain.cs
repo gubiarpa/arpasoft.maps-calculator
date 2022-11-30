@@ -23,6 +23,7 @@ namespace arpasoft.maps_calculator.winforms
         #region Form-Mode
         private Graphics? _myGraphics;
         private FormMode _formMode = FormMode.ReadOnly;
+        private AddingEdgeType _addingEdgeType = AddingEdgeType.Single;
         private Coordinate? _lastNodeMatched = null;
         #endregion
 
@@ -38,6 +39,7 @@ namespace arpasoft.maps_calculator.winforms
         private void FrmMain_Load(object sender, EventArgs e)
         {
             _myGraphics = picMap.CreateGraphics();
+            rbtSingleEdge.Visible = rbtDoubleEdge.Visible = (_formMode == FormMode.AddingEdges);
         }
 
         private void picMap_Click(object sender, EventArgs e)
@@ -73,9 +75,15 @@ namespace arpasoft.maps_calculator.winforms
             btnAddEdges.Text = _formMode == FormMode.AddingEdges ? "Add Edges" : "Exit";
             btnAddNodes.Enabled = _formMode == FormMode.AddingEdges;
             picMap.Cursor = _formMode == FormMode.AddingEdges ? Cursors.Arrow : Cursors.Hand;
+            rbtSingleEdge.Visible = rbtDoubleEdge.Visible = (_formMode == FormMode.ReadOnly);
 
             if (_formMode == FormMode.AddingEdges)
+            {
                 _lastNodeMatched = null; // Release last node matched
+            }
+
+            rbtSingleEdge.Checked = (_addingEdgeType == AddingEdgeType.Single);
+            rbtDoubleEdge.Checked = (_addingEdgeType == AddingEdgeType.Double);
 
             _formMode = _formMode == FormMode.ReadOnly ? FormMode.AddingEdges : FormMode.ReadOnly;
         }
