@@ -51,16 +51,17 @@ namespace arpasoft.maps_calculator.winforms
             switch (_formMode)
             {
                 case FormMode.AddingNodes:
-                    AddNodeAndDrawMap();
+                    AddNodeAndDrawInMap();
                     break;
                 case FormMode.AddingEdges:
-                    DrawMapEdge();
+                    DrawMapEdgeFromLastNodeMatched();
                     break;
                 case FormMode.ReadOnly:
                     if (!_dirty)
                     {
                         btnAddNodes.Enabled = btnAddEdges.Enabled = true;
                         LoadAndPrintNodes();
+                        LoadAndPrintEdges();
                         _dirty = true;
                     }
                     break;
@@ -144,7 +145,7 @@ namespace arpasoft.maps_calculator.winforms
                             X = int.Parse(fields[0]),
                             Y = int.Parse(fields[1]),
                         };
-                        AddNodeAndDrawMap(newNode);
+                        AddNodeAndDrawInMap(newNode);
                     }
                     catch
                     {
@@ -183,20 +184,56 @@ namespace arpasoft.maps_calculator.winforms
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void LoadAndPrintEdges()
+        {
+            try
+            {
+                /// 1. Read file
+                var path = Path.Combine(Environment.CurrentDirectory, "..\\..\\..\\Data\\");
+                var edgesCsv = File.ReadAllText(Path.Combine(path, "Edges.csv"));
+                var edgeLines = edgesCsv.Split('\n');
+
+                /// 2. Load and print edges
+                foreach (var edgeLine in edgeLines)
+                {
+                    try
+                    {
+                        var fields = edgeLine.Split(',');
+                        var nodeStart = new Coordinate(0) { X = int.Parse(fields[0]), Y = int.Parse(fields[1]) };
+                        var nodeEnd = new Coordinate(0) { X = int.Parse(fields[2]), Y = int.Parse(fields[3]) };
+                        var matchedNodeStart = _mapService.GetNodeByValue(nodeStart);
+                        var matchedNodeEnd = _mapService.GetNodeByValue(nodeEnd);
+
+                        if (matchedNodeStart == null || matchedNodeEnd == null)
+                            continue;
+
+                        AddEdgeAndDrawInMap(matchedNodeStart, matchedNodeEnd);
+                    }
+                    catch
+                    {
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
         #endregion
 
         #region Drawing
-        private void AddNodeAndDrawMap(Coordinate? coordinate = null)
+        private void AddNodeAndDrawInMap(Coordinate? coordinate = null)
         {
             Coordinate coordinateTarget = coordinate ?? GetCoordinate();
             _mapService.AddNode(coordinateTarget);
             _myGraphics!.DrawEllipse(new Pen(Color.Red, 2), coordinateTarget.X, coordinateTarget.Y, RADIUS, RADIUS);
         }
 
-        private void DrawMapEdge()
+        private void DrawMapEdgeFromLastNodeMatched()
         {
-            var coordinate = GetCoordinate();
-            var matchedNode = _mapService.GetNodeByValue(coordinate);
+            var coordinateEnd = GetCoordinate();
+            var matchedNode = _mapService.GetNodeByValue(coordinateEnd);
 
             if (matchedNode != null)
             {
@@ -213,6 +250,18 @@ namespace arpasoft.maps_calculator.winforms
                 }
 
                 _lastNodeMatched = matchedNode;
+            }
+        }
+
+        private void AddEdgeAndDrawInMap(Coordinate coordinateStart, Coordinate coordinateEnd)
+        {
+            var edgeAdded = _mapService.AddEdge(coordinateStart.ID, coordinateEnd.ID);
+            if (edgeAdded)
+            {
+                var color = _addingEdgeType == AddingEdgeType.Single ? Color.Red : Color.Green;
+                _myGraphics!.DrawLine(new Pen(color, 2),
+                    coordinateStart.X + ERROR_LINE_X1, coordinateStart.Y + ERROR_LINE_Y1,
+                    coordinateEnd.X + ERROR_LINE_X2, coordinateEnd.Y + ERROR_LINE_Y2);
             }
         }
         #endregion
