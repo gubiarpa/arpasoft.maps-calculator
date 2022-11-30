@@ -53,7 +53,7 @@
             // 
             // btnAddNodes
             // 
-            this.btnAddNodes.Location = new System.Drawing.Point(20, 41);
+            this.btnAddNodes.Location = new System.Drawing.Point(26, 41);
             this.btnAddNodes.Name = "btnAddNodes";
             this.btnAddNodes.Size = new System.Drawing.Size(142, 29);
             this.btnAddNodes.TabIndex = 1;
@@ -100,7 +100,7 @@
             // 
             // btnAddEdges
             // 
-            this.btnAddEdges.Location = new System.Drawing.Point(168, 41);
+            this.btnAddEdges.Location = new System.Drawing.Point(188, 41);
             this.btnAddEdges.Name = "btnAddEdges";
             this.btnAddEdges.Size = new System.Drawing.Size(142, 29);
             this.btnAddEdges.TabIndex = 2;

@@ -22,6 +22,7 @@ namespace arpasoft.maps_calculator.winforms
 
         #region Form-Mode
         private Graphics? _myGraphics;
+        private bool _dirty = false;
         private FormMode _formMode = FormMode.ReadOnly;
         private AddingEdgeType _addingEdgeType = AddingEdgeType.Single;
         private Coordinate? _lastNodeMatched = null;
@@ -38,8 +39,10 @@ namespace arpasoft.maps_calculator.winforms
         #region Events
         private void FrmMain_Load(object sender, EventArgs e)
         {
+            /// Load Controls
             _myGraphics = picMap.CreateGraphics();
             rbtSingleEdge.Visible = rbtDoubleEdge.Visible = (_formMode == FormMode.AddingEdges);
+            btnAddNodes.Enabled = btnAddEdges.Enabled = false;
         }
 
         private void picMap_Click(object sender, EventArgs e)
@@ -47,10 +50,18 @@ namespace arpasoft.maps_calculator.winforms
             switch (_formMode)
             {
                 case FormMode.AddingNodes:
-                    DrawMapNode();
+                    AddNodeAndDrawMap();
                     break;
                 case FormMode.AddingEdges:
                     DrawMapEdge();
+                    break;
+                case FormMode.ReadOnly:
+                    if (!_dirty)
+                    {
+                        btnAddNodes.Enabled = btnAddEdges.Enabled = true;
+                        LoadAndPrintNodes();
+                        _dirty = true;
+                    }
                     break;
             }
         }
@@ -99,12 +110,41 @@ namespace arpasoft.maps_calculator.winforms
         }
         #endregion
 
-        #region Drawing
-        private void DrawMapNode()
+        #region DataLoaders
+        private void LoadAndPrintNodes()
         {
-            var coordinate = GetCoordinate();
-            _mapService.AddNode(coordinate);
-            _myGraphics!.DrawEllipse(new Pen(Color.Red, 2), coordinate.X, coordinate.Y, RADIUS, RADIUS);
+            /// 1. Read file
+            var path = Path.Combine(Environment.CurrentDirectory, "..\\..\\..\\Data\\");
+            var nodesCsv = File.ReadAllText(Path.Combine(path, "Nodes.csv"));
+            var nodeLines = nodesCsv.Split('\n');
+
+            /// 2. Load and print nodes
+            foreach (var nodeLine in nodeLines)
+            {
+                try
+                {
+                    var fields = nodeLine.Split(',');
+                    var nodesCount = _mapService.GetNodesCount();
+                    var newNode = new Coordinate(nodesCount + 1)
+                    {
+                        X = int.Parse(fields[0]),
+                        Y = int.Parse(fields[1]),
+                    };
+                    AddNodeAndDrawMap(newNode);
+                }
+                catch
+                {
+                }
+            }
+        }
+        #endregion
+
+        #region Drawing
+        private void AddNodeAndDrawMap(Coordinate? coordinate = null)
+        {
+            Coordinate coordinateTarget = coordinate ?? GetCoordinate();
+            _mapService.AddNode(coordinateTarget);
+            _myGraphics!.DrawEllipse(new Pen(Color.Red, 2), coordinateTarget.X, coordinateTarget.Y, RADIUS, RADIUS);
         }
 
         private void DrawMapEdge()
