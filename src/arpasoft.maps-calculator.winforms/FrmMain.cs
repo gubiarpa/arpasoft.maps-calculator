@@ -95,15 +95,20 @@ namespace arpasoft.maps_calculator.winforms
             var coordinate = GetCoordinate();
             var matchedNode = _mapService.GetNodeByValue(coordinate);
 
-            if (matchedNode != null && _lastNodeMatched != null)
+            if (matchedNode != null)
             {
-                _mapService.AddEdge(_lastNodeMatched.ID, matchedNode.ID);
-                _myGraphics!.DrawLine(new Pen(Color.Red, 2),
-                    _lastNodeMatched!.X + ERROR_LINE_X1, _lastNodeMatched!.Y + ERROR_LINE_Y1,
-                    matchedNode.X + ERROR_LINE_X2, matchedNode.Y + ERROR_LINE_Y2);
+                if (_lastNodeMatched != null)
+                {
+                    _mapService.AddEdge(_lastNodeMatched.ID, matchedNode.ID);
+                    _myGraphics!.DrawLine(new Pen(Color.Red, 2),
+                        _lastNodeMatched!.X + ERROR_LINE_X1, _lastNodeMatched!.Y + ERROR_LINE_Y1,
+                        matchedNode.X + ERROR_LINE_X2, matchedNode.Y + ERROR_LINE_Y2);
+                }
+
+                _lastNodeMatched = matchedNode;
             }
 
-            _lastNodeMatched = matchedNode;
+
 
         }
         #endregion
