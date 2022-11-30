@@ -31,9 +31,9 @@
             this.picMap = new System.Windows.Forms.PictureBox();
             this.btnAddNodes = new System.Windows.Forms.Button();
             this.groupMain = new System.Windows.Forms.GroupBox();
-            this.btnAddEdges = new System.Windows.Forms.Button();
-            this.rbtSingleEdge = new System.Windows.Forms.RadioButton();
             this.rbtDoubleEdge = new System.Windows.Forms.RadioButton();
+            this.rbtSingleEdge = new System.Windows.Forms.RadioButton();
+            this.btnAddEdges = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picMap)).BeginInit();
             this.groupMain.SuspendLayout();
             this.SuspendLayout();
@@ -74,15 +74,17 @@
             this.groupMain.TabStop = false;
             this.groupMain.Text = "Mantenimiento";
             // 
-            // btnAddEdges
+            // rbtDoubleEdge
             // 
-            this.btnAddEdges.Location = new System.Drawing.Point(168, 41);
-            this.btnAddEdges.Name = "btnAddEdges";
-            this.btnAddEdges.Size = new System.Drawing.Size(142, 29);
-            this.btnAddEdges.TabIndex = 2;
-            this.btnAddEdges.Text = "Add Edges";
-            this.btnAddEdges.UseVisualStyleBackColor = true;
-            this.btnAddEdges.Click += new System.EventHandler(this.btnAddEdges_Click);
+            this.rbtDoubleEdge.AutoSize = true;
+            this.rbtDoubleEdge.Location = new System.Drawing.Point(1329, 43);
+            this.rbtDoubleEdge.Name = "rbtDoubleEdge";
+            this.rbtDoubleEdge.Size = new System.Drawing.Size(79, 24);
+            this.rbtDoubleEdge.TabIndex = 4;
+            this.rbtDoubleEdge.TabStop = true;
+            this.rbtDoubleEdge.Text = "Double";
+            this.rbtDoubleEdge.UseVisualStyleBackColor = true;
+            this.rbtDoubleEdge.CheckedChanged += new System.EventHandler(this.rbtDoubleEdge_CheckedChanged);
             // 
             // rbtSingleEdge
             // 
@@ -94,17 +96,17 @@
             this.rbtSingleEdge.TabStop = true;
             this.rbtSingleEdge.Text = "Single";
             this.rbtSingleEdge.UseVisualStyleBackColor = true;
+            this.rbtSingleEdge.CheckedChanged += new System.EventHandler(this.rbtSingleEdge_CheckedChanged);
             // 
-            // rbtDoubleEdge
+            // btnAddEdges
             // 
-            this.rbtDoubleEdge.AutoSize = true;
-            this.rbtDoubleEdge.Location = new System.Drawing.Point(1329, 43);
-            this.rbtDoubleEdge.Name = "rbtDoubleEdge";
-            this.rbtDoubleEdge.Size = new System.Drawing.Size(79, 24);
-            this.rbtDoubleEdge.TabIndex = 4;
-            this.rbtDoubleEdge.TabStop = true;
-            this.rbtDoubleEdge.Text = "Double";
-            this.rbtDoubleEdge.UseVisualStyleBackColor = true;
+            this.btnAddEdges.Location = new System.Drawing.Point(168, 41);
+            this.btnAddEdges.Name = "btnAddEdges";
+            this.btnAddEdges.Size = new System.Drawing.Size(142, 29);
+            this.btnAddEdges.TabIndex = 2;
+            this.btnAddEdges.Text = "Add Edges";
+            this.btnAddEdges.UseVisualStyleBackColor = true;
+            this.btnAddEdges.Click += new System.EventHandler(this.btnAddEdges_Click);
             // 
             // FrmMain
             // 

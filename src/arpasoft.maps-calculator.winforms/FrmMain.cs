@@ -87,8 +87,17 @@ namespace arpasoft.maps_calculator.winforms
 
             _formMode = _formMode == FormMode.ReadOnly ? FormMode.AddingEdges : FormMode.ReadOnly;
         }
-        #endregion
 
+        private void rbtSingleEdge_CheckedChanged(object sender, EventArgs e)
+        {
+            _addingEdgeType = AddingEdgeType.Single;
+        }
+
+        private void rbtDoubleEdge_CheckedChanged(object sender, EventArgs e)
+        {
+            _addingEdgeType = AddingEdgeType.Double;
+        }
+        #endregion
 
         #region Drawing
         private void DrawMapNode()
@@ -110,7 +119,8 @@ namespace arpasoft.maps_calculator.winforms
                     var edgeAdded = _mapService.AddEdge(_lastNodeMatched.ID, matchedNode.ID);
                     if (edgeAdded)
                     {
-                        _myGraphics!.DrawLine(new Pen(Color.Red, 2),
+                        var color = _addingEdgeType == AddingEdgeType.Single ? Color.Red : Color.Green;
+                        _myGraphics!.DrawLine(new Pen(color, 2),
                             _lastNodeMatched!.X + ERROR_LINE_X1, _lastNodeMatched!.Y + ERROR_LINE_Y1,
                             matchedNode.X + ERROR_LINE_X2, matchedNode.Y + ERROR_LINE_Y2);
                     }
@@ -118,9 +128,6 @@ namespace arpasoft.maps_calculator.winforms
 
                 _lastNodeMatched = matchedNode;
             }
-
-
-
         }
         #endregion
 
