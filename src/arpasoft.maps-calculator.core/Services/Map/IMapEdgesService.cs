@@ -1,4 +1,5 @@
 ﻿using arpasoft.maps_calculator.core.Behavior;
+using arpasoft.maps_calculator.core.Entities;
 
 namespace arpasoft.maps_calculator.core.Services.Map
 {
@@ -30,5 +31,11 @@ namespace arpasoft.maps_calculator.core.Services.Map
         /// <param name="node1">ID del Nodo 1</param>
         /// <param name="node2">ID del Nodo 2</param>
         bool AddEdge(int id1, int id2);
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        IEnumerable<Edge<T>>? GetAllEdges();
     }
 }

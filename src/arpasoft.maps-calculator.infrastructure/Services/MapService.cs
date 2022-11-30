@@ -82,6 +82,11 @@ namespace arpasoft.maps_calculator.infrastructure.Services
 
             return connectionExists;
         }
+
+        public IEnumerable<Edge<T>>? GetAllEdges()
+        {
+            return _map!.Edges;
+        }
         #endregion
 
         #region Calculation

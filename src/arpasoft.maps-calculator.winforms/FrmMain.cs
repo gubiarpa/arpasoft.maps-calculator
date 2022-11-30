@@ -96,20 +96,24 @@ namespace arpasoft.maps_calculator.winforms
             if (AbortAddingEdgeAction())
                 return;
 
-            btnAddEdges.Text = _formMode == FormMode.AddingEdges ? "Add Edges" : "Exit";
-            btnAddNodes.Enabled = _formMode == FormMode.AddingEdges;
-            picMap.Cursor = _formMode == FormMode.AddingEdges ? Cursors.Arrow : Cursors.Hand;
-            rbtSingleEdge.Visible = rbtDoubleEdge.Visible = (_formMode == FormMode.ReadOnly);
-
-            if (_formMode == FormMode.AddingEdges)
+            switch (_formMode)
             {
-                _lastNodeMatched = null; // Release last node matched
+                case FormMode.AddingEdges:
+                    btnAddEdges.Text = "Add Edges";
+                    btnAddNodes.Enabled = true;
+                    picMap.Cursor = Cursors.Arrow;
+                    SaveEdges();
+                    _formMode = FormMode.ReadOnly;
+                    break;
+                case FormMode.ReadOnly:
+                    btnAddEdges.Text = "Exit";
+                    btnAddNodes.Enabled = false;
+                    picMap.Cursor = Cursors.Hand;
+                    rbtSingleEdge.Checked = (_addingEdgeType == AddingEdgeType.Single);
+                    rbtDoubleEdge.Checked = (_addingEdgeType == AddingEdgeType.Double);
+                    _formMode = FormMode.AddingEdges;
+                    break;
             }
-
-            rbtSingleEdge.Checked = (_addingEdgeType == AddingEdgeType.Single);
-            rbtDoubleEdge.Checked = (_addingEdgeType == AddingEdgeType.Double);
-
-            _formMode = _formMode == FormMode.ReadOnly ? FormMode.AddingEdges : FormMode.ReadOnly;
         }
 
         private void rbtSingleEdge_CheckedChanged(object sender, EventArgs e)
@@ -214,6 +218,33 @@ namespace arpasoft.maps_calculator.winforms
                     {
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private void SaveEdges()
+        {
+            try
+            {
+                /// 1. Get file and structure
+                var path = Path.Combine(Environment.CurrentDirectory, "..\\..\\..\\Data\\");
+                var strBuilder = new StringBuilder();
+                var edges = _mapService.GetAllEdges()?.ToList();
+
+                if (edges == null)
+                    return;
+
+                /// 2. Build content
+                foreach (var edge in edges)
+                {
+                    strBuilder.AppendLine($"{edge.NodeStart!.X},{edge.NodeStart!.Y},{edge.NodeEnd!.X},{edge.NodeEnd!.Y}");
+                }
+
+                /// 3. Write content
+                File.WriteAllText(Path.Combine(path, "Edges.csv"), strBuilder.ToString());
             }
             catch (Exception ex)
             {
