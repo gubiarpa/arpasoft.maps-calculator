@@ -59,9 +59,9 @@ namespace arpasoft.maps_calculator.winforms
                 case FormMode.ReadOnly:
                     if (!_dirty)
                     {
+                        FirstLoadAndPrintNodes();
+                        FirstLoadAndPrintEdges();
                         btnAddNodes.Enabled = btnAddEdges.Enabled = true;
-                        LoadAndPrintNodes();
-                        LoadAndPrintEdges();
                         _dirty = true;
                     }
                     break;
@@ -131,7 +131,7 @@ namespace arpasoft.maps_calculator.winforms
         #endregion
 
         #region DataIO
-        private void LoadAndPrintNodes()
+        private void FirstLoadAndPrintNodes()
         {
             try
             {
@@ -192,7 +192,7 @@ namespace arpasoft.maps_calculator.winforms
             }
         }
 
-        private void LoadAndPrintEdges()
+        private void FirstLoadAndPrintEdges()
         {
             try
             {
