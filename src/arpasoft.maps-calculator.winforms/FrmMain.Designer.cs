@@ -31,10 +31,10 @@
             this.picMap = new System.Windows.Forms.PictureBox();
             this.btnAddNodes = new System.Windows.Forms.Button();
             this.groupMain = new System.Windows.Forms.GroupBox();
+            this.btnCalculate = new System.Windows.Forms.Button();
             this.rbtDoubleEdge = new System.Windows.Forms.RadioButton();
             this.rbtSingleEdge = new System.Windows.Forms.RadioButton();
             this.btnAddEdges = new System.Windows.Forms.Button();
-            this.btnCalculate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picMap)).BeginInit();
             this.groupMain.SuspendLayout();
             this.SuspendLayout();
@@ -76,6 +76,16 @@
             this.groupMain.TabStop = false;
             this.groupMain.Text = "Mantenimiento";
             // 
+            // btnCalculate
+            // 
+            this.btnCalculate.Location = new System.Drawing.Point(346, 41);
+            this.btnCalculate.Name = "btnCalculate";
+            this.btnCalculate.Size = new System.Drawing.Size(142, 29);
+            this.btnCalculate.TabIndex = 5;
+            this.btnCalculate.Text = "Calculate Path";
+            this.btnCalculate.UseVisualStyleBackColor = true;
+            this.btnCalculate.Click += new System.EventHandler(this.btnCalculate_Click);
+            // 
             // rbtDoubleEdge
             // 
             this.rbtDoubleEdge.AutoSize = true;
@@ -109,16 +119,6 @@
             this.btnAddEdges.Text = "Add Edges";
             this.btnAddEdges.UseVisualStyleBackColor = true;
             this.btnAddEdges.Click += new System.EventHandler(this.btnAddEdges_Click);
-            // 
-            // btnCalculate
-            // 
-            this.btnCalculate.Location = new System.Drawing.Point(346, 41);
-            this.btnCalculate.Name = "btnCalculate";
-            this.btnCalculate.Size = new System.Drawing.Size(142, 29);
-            this.btnCalculate.TabIndex = 5;
-            this.btnCalculate.Text = "Calcular Rutas";
-            this.btnCalculate.UseVisualStyleBackColor = true;
-            this.btnCalculate.Click += new System.EventHandler(this.btnCalculate_Click);
             // 
             // FrmMain
             // 

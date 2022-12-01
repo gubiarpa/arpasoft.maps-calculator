@@ -17,6 +17,11 @@ namespace arpasoft.maps_calculator.winforms
         private const int ERROR_LINE_Y2 = 5;
         #endregion
 
+        #region Path
+        private Coordinate? _pathNodeStart = null;
+        private Coordinate? _pathNodeEnd = null;
+        #endregion
+
         #region Map
         private IMapService<Coordinate> _mapService;
         #endregion
@@ -43,7 +48,7 @@ namespace arpasoft.maps_calculator.winforms
             /// Load Controls
             _myGraphics = picMap.CreateGraphics();
             rbtSingleEdge.Visible = rbtDoubleEdge.Visible = (_formMode == FormMode.AddingEdges);
-            btnAddNodes.Enabled = btnAddEdges.Enabled = false;
+            btnAddNodes.Enabled = btnAddEdges.Enabled = btnCalculate.Enabled = false;
         }
 
         private void picMap_Click(object sender, EventArgs e)
@@ -56,12 +61,15 @@ namespace arpasoft.maps_calculator.winforms
                 case FormMode.AddingEdges:
                     DrawMapEdgeFromLastNodeMatched();
                     break;
+                case FormMode.CalculatePath:
+                    SetAndPaintExtremeNodes();
+                    break;
                 case FormMode.ReadOnly:
                     if (!_dirty)
                     {
                         FirstLoadAndPrintNodes();
                         FirstLoadAndPrintEdges();
-                        btnAddNodes.Enabled = btnAddEdges.Enabled = true;
+                        btnAddNodes.Enabled = btnAddEdges.Enabled = btnCalculate.Enabled = true;
                         _dirty = true;
                     }
                     break;
@@ -77,14 +85,14 @@ namespace arpasoft.maps_calculator.winforms
             {
                 case FormMode.AddingNodes:
                     btnAddNodes.Text = "Add Nodes";
-                    btnAddEdges.Enabled = true;
+                    btnAddEdges.Enabled = btnCalculate.Enabled = true;
                     picMap.Cursor = Cursors.Arrow;
                     SaveNodes();
                     _formMode = FormMode.ReadOnly;
                     break;
                 case FormMode.ReadOnly:
                     btnAddNodes.Text = "Exit";
-                    btnAddEdges.Enabled = false;
+                    btnAddEdges.Enabled = btnCalculate.Enabled = false;
                     picMap.Cursor = Cursors.Cross;
                     _formMode = FormMode.AddingNodes;
                     break;
@@ -100,7 +108,7 @@ namespace arpasoft.maps_calculator.winforms
             {
                 case FormMode.AddingEdges:
                     btnAddEdges.Text = "Add Edges";
-                    btnAddNodes.Enabled = true;
+                    btnAddNodes.Enabled = btnCalculate.Enabled = true;
                     picMap.Cursor = Cursors.Arrow;
                     _lastNodeMatched = null;
                     rbtSingleEdge.Visible = rbtDoubleEdge.Visible = false;
@@ -109,7 +117,7 @@ namespace arpasoft.maps_calculator.winforms
                     break;
                 case FormMode.ReadOnly:
                     btnAddEdges.Text = "Exit";
-                    btnAddNodes.Enabled = false;
+                    btnAddNodes.Enabled = btnCalculate.Enabled = false;
                     picMap.Cursor = Cursors.Hand;
                     rbtSingleEdge.Checked = (_addingEdgeType == AddingEdgeType.Single);
                     rbtDoubleEdge.Checked = (_addingEdgeType == AddingEdgeType.Double);
@@ -121,6 +129,23 @@ namespace arpasoft.maps_calculator.winforms
 
         private void btnCalculate_Click(object sender, EventArgs e)
         {
+            switch (_formMode)
+            {
+                case FormMode.CalculatePath:
+                    btnCalculate.Text = "Calculate Path";
+                    btnAddNodes.Enabled = btnAddEdges.Enabled = true;
+                    picMap.Cursor = Cursors.Arrow;
+                    _formMode = FormMode.ReadOnly;
+                    break;
+                case FormMode.ReadOnly:
+                    btnCalculate.Text = "Exit";
+                    btnAddNodes.Enabled = btnAddEdges.Enabled = false;
+                    picMap.Cursor = Cursors.Hand;
+                    _formMode = FormMode.CalculatePath;
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void rbtSingleEdge_CheckedChanged(object sender, EventArgs e)
@@ -332,6 +357,26 @@ namespace arpasoft.maps_calculator.winforms
                 _myGraphics!.DrawLine(new Pen(color, 2),
                     coordinateStart.X + ERROR_LINE_X1, coordinateStart.Y + ERROR_LINE_Y1,
                     coordinateEnd.X + ERROR_LINE_X2, coordinateEnd.Y + ERROR_LINE_Y2);
+        }
+
+        /// <summary>
+        /// Establece el punto inicial o final, dependiendo de cuándo se presione
+        /// </summary>
+        private void SetAndPaintExtremeNodes()
+        {
+            var coordinate = GetCoordinate();
+            var matchedNode = _mapService.GetNodeByValue(coordinate);
+
+            if (matchedNode == null)
+                return;
+
+            _myGraphics!.DrawEllipse(new Pen(Color.DarkCyan, 2), matchedNode.X, matchedNode.Y, RADIUS, RADIUS);
+
+            if (_pathNodeStart == null)
+                _pathNodeStart = _mapService.GetNodeByValue(matchedNode);
+            else if (_pathNodeEnd == null)
+                _pathNodeEnd = _mapService.GetNodeByValue(matchedNode);
+
         }
         #endregion
 
