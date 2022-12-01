@@ -1,4 +1,5 @@
 ﻿using arpasoft.maps_calculator.core.Behavior;
+using arpasoft.maps_calculator.core.Enums;
 
 namespace arpasoft.maps_calculator.core.Entities
 {
@@ -24,10 +25,14 @@ namespace arpasoft.maps_calculator.core.Entities
         }
         #endregion
 
-        #region Properties
+        #region Readonly
         public T? Data => _data;
         public TreeNode<T>? Parent => _parent;
         public List<TreeNode<T>>? Children => _children;
+        #endregion
+
+        #region Properties
+        public TreeNodeState State { get; set; }
         #endregion
     }
 }
