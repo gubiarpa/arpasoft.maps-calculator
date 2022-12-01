@@ -102,6 +102,8 @@ namespace arpasoft.maps_calculator.winforms
                     btnAddEdges.Text = "Add Edges";
                     btnAddNodes.Enabled = true;
                     picMap.Cursor = Cursors.Arrow;
+                    _lastNodeMatched = null;
+                    rbtSingleEdge.Visible = rbtDoubleEdge.Visible = false;
                     SaveEdges();
                     _formMode = FormMode.ReadOnly;
                     break;
@@ -111,6 +113,7 @@ namespace arpasoft.maps_calculator.winforms
                     picMap.Cursor = Cursors.Hand;
                     rbtSingleEdge.Checked = (_addingEdgeType == AddingEdgeType.Single);
                     rbtDoubleEdge.Checked = (_addingEdgeType == AddingEdgeType.Double);
+                    rbtSingleEdge.Visible = rbtDoubleEdge.Visible = true;
                     _formMode = FormMode.AddingEdges;
                     break;
             }
@@ -273,7 +276,7 @@ namespace arpasoft.maps_calculator.winforms
                     var edgeAdded = _mapService.AddEdge(_lastNodeMatched.ID, matchedNode.ID);
                     if (edgeAdded)
                     {
-                        var color = _addingEdgeType == AddingEdgeType.Single ? Color.Red : Color.Green;
+                        var color = _addingEdgeType == AddingEdgeType.Single ? Color.Red : Color.Blue;
                         _myGraphics!.DrawLine(new Pen(color, 2),
                             _lastNodeMatched!.X + ERROR_LINE_X1, _lastNodeMatched!.Y + ERROR_LINE_Y1,
                             matchedNode.X + ERROR_LINE_X2, matchedNode.Y + ERROR_LINE_Y2);
@@ -289,7 +292,7 @@ namespace arpasoft.maps_calculator.winforms
             var edgeAdded = _mapService.AddEdge(coordinateStart.ID, coordinateEnd.ID);
             if (edgeAdded)
             {
-                var color = _addingEdgeType == AddingEdgeType.Single ? Color.Red : Color.Green;
+                var color = _addingEdgeType == AddingEdgeType.Single ? Color.Red : Color.Blue;
                 _myGraphics!.DrawLine(new Pen(color, 2),
                     coordinateStart.X + ERROR_LINE_X1, coordinateStart.Y + ERROR_LINE_Y1,
                     coordinateEnd.X + ERROR_LINE_X2, coordinateEnd.Y + ERROR_LINE_Y2);
