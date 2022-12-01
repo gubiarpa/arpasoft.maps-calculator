@@ -17,6 +17,13 @@ namespace arpasoft.maps_calculator.winforms
         private const int ERROR_LINE_Y2 = 5;
         #endregion
 
+        #region Colors
+        private Color MAP_NODE_SINGLE_COLOR = Color.Gray;
+        private Color MAP_NODE_DOUBLE_COLOR = Color.Gray;
+        private Color MAP_EDGE_COLOR = Color.Gray;
+        private Color PATH_NODE_COLOR = Color.Green;
+        #endregion
+
         #region Path
         private Coordinate? _pathNodeStart = null;
         private Coordinate? _pathNodeEnd = null;
@@ -290,7 +297,7 @@ namespace arpasoft.maps_calculator.winforms
         {
             Coordinate coordinateTarget = coordinate ?? GetCoordinate();
             _mapService.AddNode(coordinateTarget);
-            _myGraphics!.DrawEllipse(new Pen(Color.Red, 2), coordinateTarget.X, coordinateTarget.Y, RADIUS, RADIUS);
+            _myGraphics!.DrawEllipse(new Pen(MAP_NODE_SINGLE_COLOR, 2), coordinateTarget.X, coordinateTarget.Y, RADIUS, RADIUS);
         }
 
         private void DrawMapEdgeFromLastNodeMatched()
@@ -303,26 +310,26 @@ namespace arpasoft.maps_calculator.winforms
                 if (_lastNodeMatched != null)
                 {
                     var edgeAdded = false;
-                    var color = Color.Red;
+                    var color = MAP_NODE_SINGLE_COLOR;
 
                     switch (_addingEdgeType)
                     {
                         case AddingEdgeType.Single:
                             edgeAdded =
                                 _mapService.AddEdge(_lastNodeMatched.ID, matchedNode.ID);
-                            color = Color.Red;
+                            color = MAP_NODE_SINGLE_COLOR;
                             break;
                         case AddingEdgeType.Double:
                             var edgeAdded1 = _mapService.AddEdge(_lastNodeMatched.ID, matchedNode.ID);
                             var edgeAdded2 = _mapService.AddEdge(matchedNode.ID, _lastNodeMatched.ID);
                             edgeAdded = edgeAdded1 && edgeAdded2;
-                            color = Color.Blue;
+                            color = MAP_NODE_DOUBLE_COLOR;
                             break;
                     }
 
                     if (edgeAdded)
                     {
-                        color = _addingEdgeType == AddingEdgeType.Single ? Color.Red : Color.Blue;
+                        color = _addingEdgeType == AddingEdgeType.Single ? MAP_NODE_SINGLE_COLOR : MAP_NODE_DOUBLE_COLOR;
                         _myGraphics!.DrawLine(new Pen(color, 2),
                             _lastNodeMatched!.X + ERROR_LINE_X1, _lastNodeMatched!.Y + ERROR_LINE_Y1,
                             matchedNode.X + ERROR_LINE_X2, matchedNode.Y + ERROR_LINE_Y2);
@@ -336,20 +343,20 @@ namespace arpasoft.maps_calculator.winforms
         private void AddEdgeAndDrawInMap(Coordinate coordinateStart, Coordinate coordinateEnd)
         {
             var edgeAdded = false;
-            var color = Color.Red;
+            var color = MAP_NODE_SINGLE_COLOR;
 
             switch (_addingEdgeType)
             {
                 case AddingEdgeType.Single:
                     edgeAdded =
                         _mapService.AddEdge(coordinateStart.ID, coordinateEnd.ID);
-                    color = Color.Red;
+                    color = MAP_NODE_SINGLE_COLOR;
                     break;
                 case AddingEdgeType.Double:
                     var edgeAdded1 = _mapService.AddEdge(coordinateStart.ID, coordinateEnd.ID);
                     var edgeAdded2 = _mapService.AddEdge(coordinateEnd.ID, coordinateStart.ID);
                     edgeAdded = edgeAdded1 && edgeAdded2;
-                    color = Color.Blue;
+                    color = MAP_NODE_DOUBLE_COLOR;
                     break;
             }
 
@@ -370,12 +377,18 @@ namespace arpasoft.maps_calculator.winforms
             if (matchedNode == null)
                 return;
 
-            _myGraphics!.DrawEllipse(new Pen(Color.DarkCyan, 2), matchedNode.X, matchedNode.Y, RADIUS, RADIUS);
+            _myGraphics!.DrawEllipse(new Pen(PATH_NODE_COLOR, 2), matchedNode.X, matchedNode.Y, RADIUS, RADIUS);
 
             if (_pathNodeStart == null)
                 _pathNodeStart = _mapService.GetNodeByValue(matchedNode);
             else if (_pathNodeEnd == null)
+            {
                 _pathNodeEnd = _mapService.GetNodeByValue(matchedNode);
+                if (_pathNodeEnd == null)
+                    return;
+
+                var test = _mapService.GetPaths(_pathNodeStart.ID, _pathNodeEnd.ID);
+            }
 
         }
         #endregion

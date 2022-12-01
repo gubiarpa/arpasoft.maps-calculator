@@ -7,10 +7,12 @@ namespace arpasoft.maps_calculator.infrastructure.Services
     public abstract class MapService<T> : IMapService<T> where T : IEntityWithID
     {
         #region Map
+        private readonly TreeService<T> _treeService;
         private readonly Map<T> _map;
 
         public MapService()
         {
+            _treeService = new TreeService<T>(this);
             _map = new Map<T>()
             {
                 Nodes = new List<T>(),
@@ -18,7 +20,7 @@ namespace arpasoft.maps_calculator.infrastructure.Services
             };
         }
         #endregion
-         
+
         #region Node
         public void AddNode(T node)
         {
@@ -92,12 +94,27 @@ namespace arpasoft.maps_calculator.infrastructure.Services
         #region Calculation
         public IEnumerable<T>? GetAdjacentNodesByID(int id)
         {
-            throw new NotImplementedException();
+            if (!IsValidMap())
+                return null;
+
+            var adjacentNodes = new List<T>();
+
+            /// Buscamos y agregamos conexiones donde esté del lado izquierdo
+            var matches = _map.Edges!.Where(x => x.NodeStart?.ID == id).Select(x => x.NodeEnd);
+
+            if (matches == null)
+                return adjacentNodes;
+
+            adjacentNodes.AddRange(matches!);
+
+            /// Devuelve la lista de matches
+            return adjacentNodes;
         }
 
         public IEnumerable<TreeNode<T>>? GetPaths(int idStart, int idEnd)
         {
-            throw new NotImplementedException();
+            var loadedTree = _treeService.LoadTree(idStart, idEnd);
+            return null;
         }
         #endregion
 
