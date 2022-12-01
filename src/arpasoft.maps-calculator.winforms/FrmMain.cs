@@ -273,10 +273,27 @@ namespace arpasoft.maps_calculator.winforms
             {
                 if (_lastNodeMatched != null)
                 {
-                    var edgeAdded = _mapService.AddEdge(_lastNodeMatched.ID, matchedNode.ID);
+                    var edgeAdded = false;
+                    var color = Color.Red;
+
+                    switch (_addingEdgeType)
+                    {
+                        case AddingEdgeType.Single:
+                            edgeAdded =
+                                _mapService.AddEdge(_lastNodeMatched.ID, matchedNode.ID);
+                            color = Color.Red;
+                            break;
+                        case AddingEdgeType.Double:
+                            var edgeAdded1 = _mapService.AddEdge(_lastNodeMatched.ID, matchedNode.ID);
+                            var edgeAdded2 = _mapService.AddEdge(matchedNode.ID, _lastNodeMatched.ID);
+                            edgeAdded = edgeAdded1 && edgeAdded2;
+                            color = Color.Blue;
+                            break;
+                    }
+
                     if (edgeAdded)
                     {
-                        var color = _addingEdgeType == AddingEdgeType.Single ? Color.Red : Color.Blue;
+                        color = _addingEdgeType == AddingEdgeType.Single ? Color.Red : Color.Blue;
                         _myGraphics!.DrawLine(new Pen(color, 2),
                             _lastNodeMatched!.X + ERROR_LINE_X1, _lastNodeMatched!.Y + ERROR_LINE_Y1,
                             matchedNode.X + ERROR_LINE_X2, matchedNode.Y + ERROR_LINE_Y2);
@@ -289,14 +306,28 @@ namespace arpasoft.maps_calculator.winforms
 
         private void AddEdgeAndDrawInMap(Coordinate coordinateStart, Coordinate coordinateEnd)
         {
-            var edgeAdded = _mapService.AddEdge(coordinateStart.ID, coordinateEnd.ID);
-            if (edgeAdded)
+            var edgeAdded = false;
+            var color = Color.Red;
+
+            switch (_addingEdgeType)
             {
-                var color = _addingEdgeType == AddingEdgeType.Single ? Color.Red : Color.Blue;
+                case AddingEdgeType.Single:
+                    edgeAdded =
+                        _mapService.AddEdge(coordinateStart.ID, coordinateEnd.ID);
+                    color = Color.Red;
+                    break;
+                case AddingEdgeType.Double:
+                    var edgeAdded1 = _mapService.AddEdge(coordinateStart.ID, coordinateEnd.ID);
+                    var edgeAdded2 = _mapService.AddEdge(coordinateEnd.ID, coordinateStart.ID);
+                    edgeAdded = edgeAdded1 && edgeAdded2;
+                    color = Color.Blue;
+                    break;
+            }
+
+            if (edgeAdded)
                 _myGraphics!.DrawLine(new Pen(color, 2),
                     coordinateStart.X + ERROR_LINE_X1, coordinateStart.Y + ERROR_LINE_Y1,
                     coordinateEnd.X + ERROR_LINE_X2, coordinateEnd.Y + ERROR_LINE_Y2);
-            }
         }
         #endregion
 
