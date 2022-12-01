@@ -34,6 +34,7 @@
             this.rbtDoubleEdge = new System.Windows.Forms.RadioButton();
             this.rbtSingleEdge = new System.Windows.Forms.RadioButton();
             this.btnAddEdges = new System.Windows.Forms.Button();
+            this.btnCalculate = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.picMap)).BeginInit();
             this.groupMain.SuspendLayout();
             this.SuspendLayout();
@@ -63,6 +64,7 @@
             // 
             // groupMain
             // 
+            this.groupMain.Controls.Add(this.btnCalculate);
             this.groupMain.Controls.Add(this.rbtDoubleEdge);
             this.groupMain.Controls.Add(this.rbtSingleEdge);
             this.groupMain.Controls.Add(this.btnAddEdges);
@@ -100,13 +102,23 @@
             // 
             // btnAddEdges
             // 
-            this.btnAddEdges.Location = new System.Drawing.Point(188, 41);
+            this.btnAddEdges.Location = new System.Drawing.Point(186, 41);
             this.btnAddEdges.Name = "btnAddEdges";
             this.btnAddEdges.Size = new System.Drawing.Size(142, 29);
             this.btnAddEdges.TabIndex = 2;
             this.btnAddEdges.Text = "Add Edges";
             this.btnAddEdges.UseVisualStyleBackColor = true;
             this.btnAddEdges.Click += new System.EventHandler(this.btnAddEdges_Click);
+            // 
+            // btnCalculate
+            // 
+            this.btnCalculate.Location = new System.Drawing.Point(346, 41);
+            this.btnCalculate.Name = "btnCalculate";
+            this.btnCalculate.Size = new System.Drawing.Size(142, 29);
+            this.btnCalculate.TabIndex = 5;
+            this.btnCalculate.Text = "Calcular Rutas";
+            this.btnCalculate.UseVisualStyleBackColor = true;
+            this.btnCalculate.Click += new System.EventHandler(this.btnCalculate_Click);
             // 
             // FrmMain
             // 
@@ -136,5 +148,6 @@
         private Button btnAddEdges;
         private RadioButton rbtDoubleEdge;
         private RadioButton rbtSingleEdge;
+        private Button btnCalculate;
     }
 }

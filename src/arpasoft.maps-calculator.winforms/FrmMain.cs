@@ -119,6 +119,10 @@ namespace arpasoft.maps_calculator.winforms
             }
         }
 
+        private void btnCalculate_Click(object sender, EventArgs e)
+        {
+        }
+
         private void rbtSingleEdge_CheckedChanged(object sender, EventArgs e)
         {
             _addingEdgeType = AddingEdgeType.Single;
