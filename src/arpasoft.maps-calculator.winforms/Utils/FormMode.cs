@@ -4,6 +4,7 @@
     {
         AddingNodes,
         AddingEdges,
+        CalculatePath,
         ReadOnly
     }
 }
