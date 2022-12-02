@@ -19,10 +19,10 @@ namespace arpasoft.maps_calculator.winforms
         #endregion
 
         #region Colors
-        private Color MAP_NODE_SINGLE_COLOR = Color.Gray;
+        private Color MAP_NODE_SINGLE_COLOR = Color.DarkGray;
         private Color MAP_NODE_DOUBLE_COLOR = Color.Gray;
-        private Color MAP_EDGE_COLOR = Color.Gray;
-        private Color PATH_NODE_COLOR = Color.Green;
+        private Color MAP_EDGE_COLOR = Color.DarkGray;
+        private Color PATH_NODE_COLOR = Color.Red;
         #endregion
 
         #region Path
@@ -351,7 +351,7 @@ namespace arpasoft.maps_calculator.winforms
                 case AddingEdgeType.Single:
                     edgeAdded =
                         _mapService.AddEdge(coordinateStart.ID, coordinateEnd.ID);
-                    color = MAP_NODE_SINGLE_COLOR;
+                    color = MAP_EDGE_COLOR;
                     break;
                 case AddingEdgeType.Double:
                     var edgeAdded1 = _mapService.AddEdge(coordinateStart.ID, coordinateEnd.ID);
@@ -395,31 +395,26 @@ namespace arpasoft.maps_calculator.winforms
                 var minimumPath = paths.OrderBy(path => CalculateDistanceInPath(path)).FirstOrDefault();
                 var minimumDistance = CalculateDistanceInPath(minimumPath!);
 
+                PaintPath(minimumPath);
             }
-
         }
 
-        private double CalculateDistanceInPath(TreeNode<Coordinate> path)
+
+        private void PaintPath(TreeNode<Coordinate>? path)
         {
             var nodeRun = path;
-            double distance = 0;
+
             while (nodeRun != null && nodeRun.Parent != null)
             {
-                distance += GetSegmentDistance(nodeRun.Data, nodeRun.Parent.Data);
+                if (nodeRun.Data == null || nodeRun.Parent.Data == null)
+                    continue;
+
+                _myGraphics!.DrawLine(new Pen(PATH_NODE_COLOR, 2),
+                    nodeRun.Data.X + ERROR_LINE_X1, nodeRun.Data.Y + ERROR_LINE_Y1,
+                    nodeRun.Parent.Data.X + ERROR_LINE_X2, nodeRun.Parent.Data.Y + ERROR_LINE_Y2);
+
                 nodeRun = nodeRun.Parent;
             }
-            return distance;
-        }
-
-        private double GetSegmentDistance(Coordinate? node1, Coordinate? node2)
-        {
-            if (node1 == null || node2 == null)
-                return 0;
-
-            double differenceX = node1.X - node2.X;
-            double differenceY = node1.Y - node2.Y;
-
-            return Math.Sqrt(differenceX * differenceX + differenceY * differenceY);
         }
         #endregion
 
@@ -461,6 +456,29 @@ namespace arpasoft.maps_calculator.winforms
                     "Esta opción no es reversible, ¿Está seguro que desea agregar aristas?",
                     "Adding Edges",
                     MessageBoxButtons.YesNo) == DialogResult.No;
+        }
+
+        private double CalculateDistanceInPath(TreeNode<Coordinate> path)
+        {
+            var nodeRun = path;
+            double distance = 0;
+            while (nodeRun != null && nodeRun.Parent != null)
+            {
+                distance += GetSegmentDistance(nodeRun.Data, nodeRun.Parent.Data);
+                nodeRun = nodeRun.Parent;
+            }
+            return distance;
+        }
+
+        private double GetSegmentDistance(Coordinate? node1, Coordinate? node2)
+        {
+            if (node1 == null || node2 == null)
+                return 0;
+
+            double differenceX = node1.X - node2.X;
+            double differenceY = node1.Y - node2.Y;
+
+            return Math.Sqrt(differenceX * differenceX + differenceY * differenceY);
         }
         #endregion
     }
