@@ -7,6 +7,7 @@ namespace arpasoft.maps_calculator.infrastructure.Services
 {
     public class TreeService<T> where T : IEntityWithID
     {
+        private const int MAX_MATCHES_BEFORE_LEAVE = 20;
         private readonly IMapService<T> _mapService;
 
         public TreeService(IMapService<T> mapService)
@@ -38,6 +39,9 @@ namespace arpasoft.maps_calculator.infrastructure.Services
 
             while (activeLeaves != null && activeLeaves.Count > 0)
             {
+                if (matchedLeaves.Count > MAX_MATCHES_BEFORE_LEAVE)
+                    break;
+
                 ExploteLeaves(idEnd, ref activeLeaves, ref matchedLeaves);
             }
 
