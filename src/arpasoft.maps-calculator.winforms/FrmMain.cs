@@ -1,3 +1,4 @@
+using arpasoft.maps_calculator.core.Entities;
 using arpasoft.maps_calculator.core.Services;
 using arpasoft.maps_calculator.winforms.Utils;
 using System.Text;
@@ -387,9 +388,38 @@ namespace arpasoft.maps_calculator.winforms
                 if (_pathNodeEnd == null)
                     return;
 
-                var test = _mapService.GetPaths(_pathNodeStart.ID, _pathNodeEnd.ID);
+                var paths = _mapService.GetPaths(_pathNodeStart.ID, _pathNodeEnd.ID);
+                if (paths == null)
+                    return;
+
+                var minimumPath = paths.OrderBy(path => CalculateDistanceInPath(path)).FirstOrDefault();
+                var minimumDistance = CalculateDistanceInPath(minimumPath!);
+
             }
 
+        }
+
+        private double CalculateDistanceInPath(TreeNode<Coordinate> path)
+        {
+            var nodeRun = path;
+            double distance = 0;
+            while (nodeRun != null && nodeRun.Parent != null)
+            {
+                distance += GetSegmentDistance(nodeRun.Data, nodeRun.Parent.Data);
+                nodeRun = nodeRun.Parent;
+            }
+            return distance;
+        }
+
+        private double GetSegmentDistance(Coordinate? node1, Coordinate? node2)
+        {
+            if (node1 == null || node2 == null)
+                return 0;
+
+            double differenceX = node1.X - node2.X;
+            double differenceY = node1.Y - node2.Y;
+
+            return Math.Sqrt(differenceX * differenceX + differenceY * differenceY);
         }
         #endregion
 

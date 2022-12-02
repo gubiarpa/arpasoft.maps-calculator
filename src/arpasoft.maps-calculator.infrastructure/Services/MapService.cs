@@ -114,7 +114,7 @@ namespace arpasoft.maps_calculator.infrastructure.Services
         public IEnumerable<TreeNode<T>>? GetPaths(int idStart, int idEnd)
         {
             var loadedTree = _treeService.LoadTree(idStart, idEnd);
-            return null;
+            return loadedTree;
         }
         #endregion
 

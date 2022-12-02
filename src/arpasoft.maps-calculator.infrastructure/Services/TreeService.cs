@@ -14,7 +14,7 @@ namespace arpasoft.maps_calculator.infrastructure.Services
             _mapService = mapService;
         }
 
-        public TreeNode<T>? LoadTree(int idStart, int idEnd)
+        public List<TreeNode<T>>? LoadTree(int idStart, int idEnd)
         {
             var nodes = _mapService.GetAllNodes();
 
@@ -41,7 +41,7 @@ namespace arpasoft.maps_calculator.infrastructure.Services
                 ExploteLeaves(idEnd, ref activeLeaves, ref matchedLeaves);
             }
 
-            return _rootNode;
+            return matchedLeaves;
         }
 
         #region Utils
