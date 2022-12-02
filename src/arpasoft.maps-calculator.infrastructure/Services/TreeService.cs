@@ -31,12 +31,51 @@ namespace arpasoft.maps_calculator.infrastructure.Services
             if (_rootNode == null)
                 return null;
 
-            LoadNodeRecursively(idEnd, _rootNode);
+            //LoadNodeRecursively(idEnd, _rootNode);
+
+            var activeLeaves = new List<TreeNode<T>>() { _rootNode };
+            var matchedLeaves = new List<TreeNode<T>>();
+
+            while (activeLeaves != null && activeLeaves.Count > 0)
+            {
+                ExploteLeaves(idEnd, ref activeLeaves, ref matchedLeaves);
+            }
 
             return _rootNode;
         }
 
         #region Utils
+        private void ExploteLeaves(int searchedId, ref List<TreeNode<T>> activeLeaves, ref List<TreeNode<T>> matchedLeaves)
+        {
+            var newLeaves = new List<TreeNode<T>>();
+
+            foreach (var oldLeaf in activeLeaves)
+            {
+                var adjacentsNodes = _mapService.GetAdjacentNodesByID(oldLeaf.Data!.ID);
+
+                if (adjacentsNodes == null)
+                    continue;
+
+                foreach (var adjacentNode in adjacentsNodes)
+                {
+                    var newLeaf = new TreeNode<T>(adjacentNode, oldLeaf!);
+                    oldLeaf?.Children?.Add(newLeaf);
+                    newLeaf.State = SetState(searchedId, newLeaf);
+
+                    switch (newLeaf.State)
+                    {
+                        case TreeNodeState.Active:
+                            newLeaves.Add(newLeaf);
+                            break;
+                        case TreeNodeState.Matched:
+                            matchedLeaves.Add(newLeaf);
+                            break;
+                    }
+                }
+            }
+
+            activeLeaves = newLeaves;
+        }
         private void LoadNodeRecursively(int searchedId, TreeNode<T> treeNode)
         {
             if (treeNode == null)
