@@ -35,6 +35,8 @@
             this.rbtDoubleEdge = new System.Windows.Forms.RadioButton();
             this.rbtSingleEdge = new System.Windows.Forms.RadioButton();
             this.btnAddEdges = new System.Windows.Forms.Button();
+            this.txtDistance = new System.Windows.Forms.TextBox();
+            this.lblDistance = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picMap)).BeginInit();
             this.groupMain.SuspendLayout();
             this.SuspendLayout();
@@ -64,6 +66,8 @@
             // 
             // groupMain
             // 
+            this.groupMain.Controls.Add(this.lblDistance);
+            this.groupMain.Controls.Add(this.txtDistance);
             this.groupMain.Controls.Add(this.btnCalculate);
             this.groupMain.Controls.Add(this.rbtDoubleEdge);
             this.groupMain.Controls.Add(this.rbtSingleEdge);
@@ -120,6 +124,23 @@
             this.btnAddEdges.UseVisualStyleBackColor = true;
             this.btnAddEdges.Click += new System.EventHandler(this.btnAddEdges_Click);
             // 
+            // txtDistance
+            // 
+            this.txtDistance.Location = new System.Drawing.Point(710, 41);
+            this.txtDistance.Name = "txtDistance";
+            this.txtDistance.ReadOnly = true;
+            this.txtDistance.Size = new System.Drawing.Size(153, 27);
+            this.txtDistance.TabIndex = 6;
+            // 
+            // lblDistance
+            // 
+            this.lblDistance.AutoSize = true;
+            this.lblDistance.Location = new System.Drawing.Point(638, 44);
+            this.lblDistance.Name = "lblDistance";
+            this.lblDistance.Size = new System.Drawing.Size(66, 20);
+            this.lblDistance.TabIndex = 7;
+            this.lblDistance.Text = "Distance";
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -149,5 +170,7 @@
         private RadioButton rbtDoubleEdge;
         private RadioButton rbtSingleEdge;
         private Button btnCalculate;
+        private Label lblDistance;
+        private TextBox txtDistance;
     }
 }

@@ -393,7 +393,14 @@ namespace arpasoft.maps_calculator.winforms
                     return;
 
                 var minimumPath = paths.OrderBy(path => CalculateDistanceInPath(path)).FirstOrDefault();
-                var minimumDistance = CalculateDistanceInPath(minimumPath!);
+
+                try
+                {
+                    txtDistance.Text = (CalculateDistanceInPath(minimumPath!)).ToString("0.00");
+                }
+                catch
+                {
+                }
 
                 PaintPath(minimumPath);
             }
